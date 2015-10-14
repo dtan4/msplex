@@ -1,8 +1,9 @@
 module Msplex
   class Generator
-    attr_reader :frontend, :services, :databases
+    attr_reader :application, :frontend, :services, :databases
 
-    def initialize(frontend, services, databases)
+    def initialize(application, frontend, services, databases)
+      @application = application
       @frontend = frontend
       @services = services
       @databases = databases
