@@ -1,6 +1,7 @@
 require "thor"
 
 require "msplex/cli"
+require "msplex/generator"
 require "msplex/resource/database"
 require "msplex/resource/frontend"
 require "msplex/resource/service"
