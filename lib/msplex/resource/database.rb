@@ -10,6 +10,17 @@ module Msplex
         @type = type
         @fields = fields
       end
+
+      def docker_image
+        case @type
+        when :rds
+          "postgres:9.4"
+        when :kvs
+          "redis:3.0"
+        else
+          nil
+        end
+      end
     end
   end
 end
