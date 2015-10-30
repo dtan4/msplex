@@ -8,6 +8,12 @@ module Msplex
         @actions = actions
       end
 
+      def compose
+        {
+          image: image,
+        }
+      end
+
       def image
         "ruby:2.2.3"
       end
