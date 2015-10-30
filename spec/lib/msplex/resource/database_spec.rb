@@ -23,6 +23,46 @@ module Msplex
         described_class.new(name, type, fields)
       end
 
+      describe "#compose" do
+        subject { database.compose }
+
+        context "if type is :rds" do
+          let(:type) do
+            :rds
+          end
+
+          it "should generate docker-compose.yml" do
+            expect(subject).to eql({
+              image: "postgres:9.4",
+            })
+          end
+        end
+
+        context "if type is :kvs" do
+          let(:type) do
+            :kvs
+          end
+
+          it "should generate docker-compose.yml" do
+            expect(subject).to eql({
+              image: "redis:3.0",
+            })
+          end
+        end
+
+        context "if type is unknown" do
+          let(:type) do
+            :unknown
+          end
+
+          it "should generate docker-compose.yml" do
+            expect(subject).to eql({
+              image: nil,
+            })
+          end
+        end
+      end
+
       describe "#docker_image" do
         subject { database.docker_image }
 

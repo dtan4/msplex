@@ -11,6 +11,12 @@ module Msplex
         @fields = fields
       end
 
+      def compose
+        {
+          image: docker_image,
+        }
+      end
+
       def docker_image
         case @type
         when :rds
