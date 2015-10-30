@@ -13,11 +13,11 @@ module Msplex
 
       def compose
         {
-          image: docker_image,
+          image: image,
         }
       end
 
-      def docker_image
+      def image
         case @type
         when :rds
           "postgres:9.4"

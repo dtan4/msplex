@@ -63,8 +63,8 @@ module Msplex
         end
       end
 
-      describe "#docker_image" do
-        subject { database.docker_image }
+      describe "#image" do
+        subject { database.image }
 
         context "if type is :rds" do
           let(:type) do
