@@ -23,6 +23,40 @@ module Msplex
         described_class.new(name, type, fields)
       end
 
+      describe "#initialize" do
+        context "if type is :rds" do
+          let(:type) do
+            :rds
+          end
+
+          it "should return new Database instance" do
+            expect(database).to be_a described_class
+          end
+        end
+
+        context "if type is :kvs" do
+          let(:type) do
+            :kvs
+          end
+
+          it "should return new Database instance" do
+            expect(database).to be_a described_class
+          end
+        end
+
+        context "if type is unknown" do
+          let(:type) do
+            :unknown
+          end
+
+          it "should rails InvalidTypeError" do
+            expect do
+              database
+            end.to raise_error InvalidDatabaseTypeError, "unknown is invalid database type"
+          end
+        end
+      end
+
       describe "#compose" do
         subject { database.compose }
 
@@ -49,15 +83,33 @@ module Msplex
             })
           end
         end
+      end
 
-        context "if type is unknown" do
+      describe "#gem" do
+        subject { database.gem }
+
+        context "if type is :rds" do
           let(:type) do
-            :unknown
+            :rds
           end
 
-          it "should generate docker-compose.yml" do
+          it "should return adapter gem and its version" do
             expect(subject).to eql({
-              image: nil,
+              gem: "pg",
+              version: "0.18.3",
+            })
+          end
+        end
+
+        context "if type is :kvs" do
+          let(:type) do
+            :kvs
+          end
+
+          it "should return adapter gem adn its version" do
+            expect(subject).to eql({
+              gem: "redis",
+              version: "3.2.1",
             })
           end
         end
@@ -81,13 +133,25 @@ module Msplex
 
           it { is_expected.to eq "redis:3.0" }
         end
+      end
 
-        context "if type is unknown" do
+      describe "#rds?" do
+        subject { database.rds? }
+
+        context "if type is :rds" do
           let(:type) do
-            :unknown
+            :rds
           end
 
-          it { is_expected.to eq nil }
+          it { is_expected.to eq true }
+        end
+
+        context "if type is :kvs" do
+          let(:type) do
+            :kvs
+          end
+
+          it { is_expected.to eq false }
         end
       end
     end
