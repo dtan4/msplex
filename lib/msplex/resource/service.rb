@@ -7,6 +7,10 @@ module Msplex
         @name = name
         @actions = actions
       end
+
+      def image
+        "ruby:2.2.3"
+      end
     end
   end
 end
