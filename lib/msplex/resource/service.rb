@@ -35,7 +35,24 @@ RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -r
 
 EXPOSE 9292
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
-        DOCKERFILE
+DOCKERFILE
+      end
+
+      def gemfile
+        <<-GEMFILE
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "slim"
+gem "sinatra-websocket"
+gem "rack_csrf", require: "rack/csrf"
+gem "activesupport", require: "active_support/all"
+gem "activerecord"
+gem "sinatra-activerecord", require: "sinatra/activerecord"
+gem #{@database.gem[:gem].inspect}, #{@database.gem[:version].inspect}
+gem "rake"
+gem "json"
+GEMFILE
       end
 
       def image

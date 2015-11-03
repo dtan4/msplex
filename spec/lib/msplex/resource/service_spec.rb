@@ -12,7 +12,7 @@ module Msplex
       end
 
       let(:database) do
-        nil
+        double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
       end
 
       let(:service) do
@@ -23,10 +23,6 @@ module Msplex
         subject { service.compose }
 
         context "when the service has database" do
-          let(:database) do
-            double(:database, name: "sampleservice-db")
-          end
-
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
               image: "ruby:2.2.3",
@@ -41,6 +37,10 @@ module Msplex
         end
 
         context "when the service does not have any database" do
+          let(:database) do
+            nil
+          end
+
           it "should generate docker-compose.yml" do
             expect(subject).to eql({
               image: "ruby:2.2.3"
@@ -73,6 +73,27 @@ RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -r
 EXPOSE 9292
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
           DOCKERFILE
+        end
+      end
+
+      describe "#gemfile" do
+        subject { service.gemfile }
+
+        it "should generate Gemfile" do
+          expect(subject).to eq <<-GEMFILE
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "slim"
+gem "sinatra-websocket"
+gem "rack_csrf", require: "rack/csrf"
+gem "activesupport", require: "active_support/all"
+gem "activerecord"
+gem "sinatra-activerecord", require: "sinatra/activerecord"
+gem "pg", "0.18.3"
+gem "rake"
+gem "json"
+GEMFILE
         end
       end
 
