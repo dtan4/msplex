@@ -1,4 +1,9 @@
 language: ruby
 rvm:
   - 2.2.3
+  - 2.1
+  - 2.0
 before_install: gem install bundler -v 1.10.6
+env:
+  global:
+    secure: i4KKO6pMSdwAGzbUeaVXhmFxWrXmP4L6MEKwR9T1LcBoRuvpx9Qho3yTzS6y3bPtnV5eSVWEv3OstjcvrUtKaNaGpiOxkUJn+25B9TqRU3O+kKZbDRcVAB4uErLVPO8PjCU3jHf2261Pw89kDbmzSz0QPYassyXL7+oulRt/vke+wi7RSZwqIeloQmhpUoJSJL1BzAv37qtUB5oRFKg2h4/9HJObzIuovW1LRVqPUt9Vu/RrgbR0vLnSQcu7ZJ3LtOgrNwkTdKtwSUV8p1w4xdY8PCGCNekTnSBVtX4yRmj7/S+g1weWVMhiiZhMhjLX2DPmd1OmNBfw0d5d7pf/14sdf0TVwgIhKiYM3bNSudajeXcccbPuxStjGTZtO4siIgS/A9vtvdY9LVKJ0Om/tRiydWrnhARGA9c+k0kGYyIG+35U2d0wXoD4qVjPcI2xYhAMUN+Pdp1iEBP00Vfd8tVzA1kzmw0UxuoAgF51j60IGgwLAY2j8aXGW3sB3+cX/pDCLL/Z876+DGHWIB//+xBXk5JfDJKTME7dbVF7p+Hv06Tg+G9XyU+kwcLJyIBFzKc+QG6IQ4lxZ5isedKpNu47eZEbO6w1TTdaPfXZHcpYAuz+T8jm3t4szTa7E7TtoACFIj4P2fKpsjjOaF1pP982KwSipk1F4Qb+x4w7KBA=
