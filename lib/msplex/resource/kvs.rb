@@ -18,6 +18,10 @@ module Msplex
         ""
       end
 
+      def definitions
+        ""
+      end
+
       def gem
         { gem: "redis", version: "3.2.1" }
       end

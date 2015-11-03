@@ -46,6 +46,12 @@ module Msplex
         it { is_expected.to eq "" }
       end
 
+      describe "#definitions" do
+        subject { kvs.definitions }
+
+        it { is_expected.to eq "" }
+      end
+
       describe "#gem" do
         subject { kvs.gem }
 
