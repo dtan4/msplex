@@ -70,7 +70,7 @@ CONFIG
 
       describe "#find" do
         let(:table) do
-          "users"
+          :users
         end
 
         let(:conditions) do

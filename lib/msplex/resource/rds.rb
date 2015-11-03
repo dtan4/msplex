@@ -56,7 +56,7 @@ CONFIG
       private
 
       def activerecord_class(table)
-        table.singularize.capitalize
+        table.to_s.singularize.capitalize
       end
 
       def db_name(environment)
