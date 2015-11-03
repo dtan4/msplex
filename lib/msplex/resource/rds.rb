@@ -37,6 +37,10 @@ production:
 CONFIG
       end
 
+      def definitions
+        tables.map { |table, fields| activerecord_definition(table, fields) }
+      end
+
       def find(table, conditions)
         "#{activerecord_class(table)}.find_by(#{find_conditions(conditions)})"
       end
@@ -57,6 +61,13 @@ CONFIG
 
       def activerecord_class(table)
         table.to_s.singularize.capitalize
+      end
+
+      def activerecord_definition(table, fields)
+        <<-DEFINITION
+class #{activerecord_class(table)} < ActiveRecord::Base
+end
+DEFINITION
       end
 
       def db_name(environment)

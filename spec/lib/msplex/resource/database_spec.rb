@@ -81,6 +81,15 @@ module Msplex
         end
       end
 
+      describe "#definitions" do
+        subject { database.definitions }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDS).to receive(:definitions)
+          subject
+        end
+      end
+
       describe "#find" do
         subject { database.find }
 

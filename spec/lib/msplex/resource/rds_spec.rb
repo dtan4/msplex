@@ -68,6 +68,23 @@ CONFIG
         end
       end
 
+      describe "#definitions"do
+        subject { rds.definitions }
+
+        it "should generate class defitions of ActiveRecord" do
+          expect(subject).to eql([
+                <<-DEFINITIONS,
+class User < ActiveRecord::Base
+end
+DEFINITIONS
+                <<-DEFINITIONS,
+class Item < ActiveRecord::Base
+end
+DEFINITIONS
+          ])
+        end
+      end
+
       describe "#find" do
         let(:table) do
           :users
