@@ -91,6 +91,47 @@ module Msplex
         end
       end
 
+      describe "#config" do
+        subject { database.config }
+
+        context "if type if :rds" do
+          let(:type) do
+            :rds
+          end
+
+          it "should generate database.yml" do
+            expect(subject).to eq <<-CONFIG
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user: postgres
+  host: db
+  port: 5432
+
+development:
+  <<: *default
+  database: sampledb_development
+
+test:
+  <<: *default
+  database: sampledb_test
+
+production:
+  database: sampledb_production
+CONFIG
+          end
+        end
+
+        context "if type if :kvs" do
+          let(:type) do
+            :kvs
+          end
+
+          it { is_expected.to eq "" }
+        end
+      end
+
       describe "#gem" do
         subject { database.gem }
 

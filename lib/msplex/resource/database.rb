@@ -21,6 +21,31 @@ module Msplex
         }
       end
 
+      def config
+        return "" unless rds?
+
+        <<-CONFIG
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user: postgres
+  host: db
+  port: 5432
+
+development:
+  <<: *default
+  database: #{db_name("development")}
+
+test:
+  <<: *default
+  database: #{db_name("test")}
+
+production:
+  database: #{db_name("production")}
+CONFIG
+      end
+
       def gem
         rds? ? { gem: "pg", version: "0.18.3" } : { gem: "redis", version: "3.2.1" }
       end
@@ -38,6 +63,10 @@ module Msplex
       end
 
       private
+
+      def db_name(environment)
+        "#{@name}_#{environment}"
+      end
 
       def down_migration(table)
         "drop_table :#{table}"
