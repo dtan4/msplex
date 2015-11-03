@@ -1,17 +1,18 @@
 module Msplex
   module Resource
     class Service
-      attr_reader :name, :actions
+      attr_reader :name, :actions, :database
 
-      def initialize(name, actions)
+      def initialize(name, actions, database)
         @name = name
         @actions = actions
+        @database = database
       end
 
       def compose
         {
           image: image,
-        }
+        }.merge(db_links)
       end
 
       def dockerfile
@@ -39,6 +40,21 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
 
       def image
         "ruby:2.2.3"
+      end
+
+      private
+
+      def db_links
+        return {} if @database.nil?
+
+        {
+          links: [
+            "#{@database.name}:db",
+          ],
+          environment: [
+            "DB_HOST=db"
+          ]
+        }
       end
     end
   end

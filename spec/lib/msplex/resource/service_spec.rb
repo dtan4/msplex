@@ -11,17 +11,41 @@ module Msplex
         []
       end
 
+      let(:database) do
+        nil
+      end
+
       let(:service) do
-        described_class.new(name, actions)
+        described_class.new(name, actions, database)
       end
 
       describe "#compose" do
         subject { service.compose }
 
-        it "should generate docker-compose.yml" do
-          expect(subject).to eql({
-            image: "ruby:2.2.3"
-          })
+        context "when the service has database" do
+          let(:database) do
+            double(:database, name: "sampleservice-db")
+          end
+
+          it "should generate docker-compose.yml linked with database" do
+            expect(subject).to eql({
+              image: "ruby:2.2.3",
+              links: [
+                "sampleservice-db:db",
+              ],
+              environment: [
+                "DB_HOST=db",
+              ]
+            })
+          end
+        end
+
+        context "when the service does not have any database" do
+          it "should generate docker-compose.yml" do
+            expect(subject).to eql({
+              image: "ruby:2.2.3"
+            })
+          end
         end
       end
 
