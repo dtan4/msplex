@@ -1,4 +1,7 @@
 # Msplex
+[![Build Status](https://travis-ci.org/dtan4/msplex.svg?branch=master)](https://travis-ci.org/dtan4/msplex)
+[![Code Climate](https://codeclimate.com/github/dtan4/msplex/badges/gpa.svg)](https://codeclimate.com/github/dtan4/msplex)
+[![Test Coverage](https://codeclimate.com/github/dtan4/msplex/badges/coverage.svg)](https://codeclimate.com/github/dtan4/msplex/coverage)
 
 Microservice-based Web Application Generator
 
