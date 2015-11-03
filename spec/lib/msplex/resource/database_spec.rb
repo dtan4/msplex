@@ -171,25 +171,35 @@ module Msplex
 
           it "should return migration code" do
             expect(subject).to eql([
-              {
-                up: (<<-MIGRATION),
-create_table :users do |t|
-  t.string :name
-  t.string :description
-  t.timestamps
+                <<-MIGRATION,
+class CreateUsers < ActiveRecord::Migration
+  def up
+    create_table :users do |t|
+      t.string :name
+      t.string :description
+      t.timestamps
+    end
+  end
+
+  def down
+    drop_table :users
+  end
 end
-            MIGRATION
-                down: "drop_table :users",
-},
-              {
-                up: (<<-MIGRATION),
-create_table :items do |t|
-  t.string :name
-  t.timestamps
+MIGRATION
+                <<-MIGRATION,
+class CreateItems < ActiveRecord::Migration
+  def up
+    create_table :items do |t|
+      t.string :name
+      t.timestamps
+    end
+  end
+
+  def down
+    drop_table :items
+  end
 end
-            MIGRATION
-                down: "drop_table :items",
-},
+MIGRATION
             ])
           end
         end
@@ -199,7 +209,7 @@ end
             :kvs
           end
 
-          it { is_expected.to eql [] }
+          it { is_expected.to eq "" }
         end
       end
     end

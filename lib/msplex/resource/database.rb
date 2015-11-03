@@ -30,14 +30,7 @@ module Msplex
       end
 
       def migration
-        return [] unless rds?
-
-        tables.map do |table, fields|
-          {
-            up: up_migration(table, fields),
-            down: down_migration(table),
-          }
-        end
+        rds? ? tables.map { |table, fields| table_migration(table, fields) } : ""
       end
 
       def rds?
@@ -58,12 +51,30 @@ module Msplex
           .join("\n")
       end
 
+      def migration_class_of(table)
+        "Create#{table.capitalize}"
+      end
+
+      def table_migration(table, fields)
+        <<-MIGRATION
+class #{migration_class_of(table)} < ActiveRecord::Migration
+  def up
+#{Utils.indent(up_migration(table, fields), 4)}
+  end
+
+  def down
+#{Utils.indent(down_migration(table), 4)}
+  end
+end
+MIGRATION
+      end
+
       def up_migration(table, fields)
         <<-MIGRATION
 create_table :#{table} do |t|
 #{field_migrations(fields)}
 end
-        MIGRATION
+MIGRATION
       end
     end
   end
