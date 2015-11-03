@@ -52,6 +52,10 @@ module Msplex
         it { is_expected.to eq "" }
       end
 
+      describe "#find" do
+        pending
+      end
+
       describe "#gem" do
         subject { kvs.gem }
 
