@@ -11,18 +11,18 @@ module Msplex
         []
       end
 
-      let(:database) do
-        double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
-      end
-
       let(:service) do
-        described_class.new(name, actions, database)
+        described_class.new(name, actions)
       end
 
       describe "#compose" do
-        subject { service.compose }
+        subject { service.compose(database) }
 
         context "when the service has database" do
+          let(:database) do
+            double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
+          end
+
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
               image: "ruby:2.2.3",
@@ -77,7 +77,11 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
       end
 
       describe "#gemfile" do
-        subject { service.gemfile }
+        let(:database) do
+          double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
+        end
+
+        subject { service.gemfile(database) }
 
         it "should generate Gemfile" do
           expect(subject).to eq <<-GEMFILE

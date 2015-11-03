@@ -1,18 +1,17 @@
 module Msplex
   module Resource
     class Service
-      attr_reader :name, :actions, :database
+      attr_reader :name, :actions
 
-      def initialize(name, actions, database)
+      def initialize(name, actions)
         @name = name
         @actions = actions
-        @database = database
       end
 
-      def compose
+      def compose(database)
         {
           image: image,
-        }.merge(db_links)
+        }.merge(db_links(database))
       end
 
       def dockerfile
@@ -38,7 +37,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
 DOCKERFILE
       end
 
-      def gemfile
+      def gemfile(database)
         <<-GEMFILE
 source "https://rubygems.org"
 
@@ -46,7 +45,7 @@ gem "sinatra"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem #{@database.gem[:gem].inspect}, #{@database.gem[:version].inspect}
+gem #{database.gem[:gem].inspect}, #{database.gem[:version].inspect}
 gem "rake"
 gem "json"
 GEMFILE
@@ -58,12 +57,12 @@ GEMFILE
 
       private
 
-      def db_links
-        return {} if @database.nil?
+      def db_links(database)
+        return {} if database.nil?
 
         {
           links: [
-            "#{@database.name}:db",
+            "#{database.name}:db",
           ],
           environment: [
             "DB_HOST=db"
