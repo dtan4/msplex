@@ -11,7 +11,9 @@ module Msplex
       def compose(database)
         {
           image: image,
-        }.merge(db_links(database))
+          links: links(database),
+          environment: environment(database),
+        }
       end
 
       def dockerfile
@@ -61,17 +63,12 @@ GEMFILE
         database ? "gem #{database.gem[:gem].inspect}, #{database.gem[:version].inspect}" : ""
       end
 
-      def db_links(database)
-        return {} if database.nil?
+      def environment(database)
+        database ? ["DB_HOST=db"] : []
+      end
 
-        {
-          links: [
-            "#{database.name}:db",
-          ],
-          environment: [
-            "DB_HOST=db"
-          ]
-        }
+      def links(database)
+        database ? ["#{database.name}:db"] : []
       end
     end
   end

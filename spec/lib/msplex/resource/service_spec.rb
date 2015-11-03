@@ -43,7 +43,9 @@ module Msplex
 
           it "should generate docker-compose.yml" do
             expect(subject).to eql({
-              image: "ruby:2.2.3"
+              image: "ruby:2.2.3",
+              links: [],
+              environment: [],
             })
           end
         end
