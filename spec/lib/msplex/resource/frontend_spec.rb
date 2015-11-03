@@ -52,6 +52,24 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         end
       end
 
+      describe "#gemfile" do
+        subject { frontend.gemfile }
+
+        it "should generate Gemfile" do
+          expect(subject).to eq <<-GEMFILE
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "slim"
+gem "sinatra-websocket"
+gem "rack_csrf", require: "rack/csrf"
+gem "activesupport", require: "active_support/all"
+gem "rake"
+gem "json"
+GEMFILE
+        end
+      end
+
       describe "#image" do
         subject { frontend.image }
 

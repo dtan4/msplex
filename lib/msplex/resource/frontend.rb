@@ -37,6 +37,20 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         DOCKERFILE
       end
 
+      def gemfile
+        <<-GEMFILE
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "slim"
+gem "sinatra-websocket"
+gem "rack_csrf", require: "rack/csrf"
+gem "activesupport", require: "active_support/all"
+gem "rake"
+gem "json"
+GEMFILE
+      end
+
       def image
         "ruby:2.2.3"
       end
