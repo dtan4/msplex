@@ -81,6 +81,15 @@ module Msplex
         end
       end
 
+      describe "#find" do
+        subject { database.find }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDS).to receive(:find)
+          subject
+        end
+      end
+
       describe "#gem" do
         subject { database.gem }
 
