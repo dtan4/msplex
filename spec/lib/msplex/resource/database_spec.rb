@@ -11,16 +11,22 @@ module Msplex
         :rds
       end
 
-      let(:fields) do
-        [
-          { key: "id", type: :int },
-          { key: "name", type: :string },
-          { key: "description", type: :string },
-        ]
+      let(:tables) do
+        {
+          users: [
+            { key: "id", type: :int },
+            { key: "name", type: :string },
+            { key: "description", type: :string },
+          ],
+          items: [
+            { key: "id", type: :int },
+            { key: "name", type: :string },
+          ]
+        }
       end
 
       let(:database) do
-        described_class.new(name, type, fields)
+        described_class.new(name, type, tables)
       end
 
       describe "#initialize" do
@@ -152,6 +158,48 @@ module Msplex
           end
 
           it { is_expected.to eq false }
+        end
+      end
+
+      describe "#migration" do
+        subject { database.migration }
+
+        context "if type is :rds" do
+          let(:type) do
+            :rds
+          end
+
+          it "should return migration code" do
+            expect(subject).to eql([
+              {
+                up: (<<-MIGRATION),
+create_table :users do |t|
+  t.string :name
+  t.string :description
+  t.timestamps
+end
+            MIGRATION
+                down: "drop_table :users",
+},
+              {
+                up: (<<-MIGRATION),
+create_table :items do |t|
+  t.string :name
+  t.timestamps
+end
+            MIGRATION
+                down: "drop_table :items",
+},
+            ])
+          end
+        end
+
+        context "if type is :kve" do
+          let(:type) do
+            :kvs
+          end
+
+          it { is_expected.to eql [] }
         end
       end
     end
