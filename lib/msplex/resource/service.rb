@@ -45,9 +45,9 @@ gem "sinatra"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem #{database.gem[:gem].inspect}, #{database.gem[:version].inspect}
 gem "rake"
 gem "json"
+#{db_gem(database)}
 GEMFILE
       end
 
@@ -56,6 +56,10 @@ GEMFILE
       end
 
       private
+
+      def db_gem(database)
+        database ? "gem #{database.gem[:gem].inspect}, #{database.gem[:version].inspect}" : ""
+      end
 
       def db_links(database)
         return {} if database.nil?

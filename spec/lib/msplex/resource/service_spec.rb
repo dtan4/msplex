@@ -77,24 +77,46 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
       end
 
       describe "#gemfile" do
-        let(:database) do
-          double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
-        end
-
         subject { service.gemfile(database) }
 
-        it "should generate Gemfile" do
-          expect(subject).to eq <<-GEMFILE
+        context "when the service has database" do
+          let(:database) do
+            double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
+          end
+
+          it "should generate Gemfile" do
+            expect(subject).to eq <<-GEMFILE
 source "https://rubygems.org"
 
 gem "sinatra"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem "pg", "0.18.3"
 gem "rake"
 gem "json"
+gem "pg", "0.18.3"
 GEMFILE
+          end
+        end
+
+        context "when the service has database" do
+          let(:database) do
+            nil
+          end
+
+          it "should generate Gemfile" do
+            expect(subject).to eq <<-GEMFILE
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "activesupport", require: "active_support/all"
+gem "activerecord"
+gem "sinatra-activerecord", require: "sinatra/activerecord"
+gem "rake"
+gem "json"
+
+GEMFILE
+          end
         end
       end
 
