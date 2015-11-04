@@ -155,6 +155,14 @@ COMPOSE
         [
           double(:service,
             name: "hogeservice",
+            config_ru: <<-CONFIGRU,
+require "rubygems"
+require "bundler"
+Bundler.require
+
+require "./app.rb"
+run App
+CONFIGRU
             dockerfile: <<-DOCKERFILE,
 FROM ruby:2.2.3
 MAINTAINER Your Name <you@example.com>
@@ -243,6 +251,11 @@ MIGRATION
       it "should create service directories" do
         subject
         expect(Dir.exists?(File.join(out_dir, "services", "hogeservice"))).to be true
+      end
+
+      it "should generate config.ru" do
+        subject
+        expect(open(File.join(out_dir, "services", "hogeservice", "config.ru")).read).to match(/require "rubygems"/)
       end
 
       it "should generate Dockerfile" do
