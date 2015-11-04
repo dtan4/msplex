@@ -230,17 +230,17 @@ CONFIG
 
       it "should generate Dockerfile" do
         subject
-        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "Dockerfile"))).to be true
+        expect(open(File.join(out_dir, "services", "hogeservice", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
       end
 
       it "should generate Gemfile" do
         subject
-        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "Gemfile"))).to be true
+        expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile")).read).to match(/gem "sinatra"/)
       end
 
       it "should generate config/database.yml" do
         subject
-        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "config", "database.yml"))).to be true
+        expect(open(File.join(out_dir, "services", "hogeservice", "config", "database.yml")).read).to match(/default: &default/)
       end
     end
   end
