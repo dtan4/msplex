@@ -1,0 +1,18 @@
+frontend:
+  elements:
+    - type: panel
+      id: rootPanel
+      class: ""
+      children:
+        - type: label
+          value: E-commerce Applicaton
+          id: label0
+          class: ""
+        - type: text
+          id: itemIdInput
+          class: ""
+        - type: button
+          value: submit
+          id: addToCartBtn
+          class: ""
+          action: cart/update

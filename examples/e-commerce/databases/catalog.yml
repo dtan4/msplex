@@ -1,0 +1,8 @@
+database:
+  name: catalog
+  type: rds
+  fields:
+    - key: name
+      type: string
+    - key: descripton
+      type: string
