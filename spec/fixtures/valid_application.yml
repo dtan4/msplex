@@ -1,0 +1,5 @@
+name: sample
+maintainer: Tanaka Taro
+links:
+  - "hogeservice:hogedb"
+  - "fugaservice:fugadb"

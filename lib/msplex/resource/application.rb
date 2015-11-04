@@ -3,8 +3,13 @@ module Msplex
     class Application
       attr_reader :name, :maintainer, :links
 
-      def initialize(application_name, maintainer, links)
-        @application_name = application_name
+      def self.read_schema(path)
+        schema = Utils.symbolize_keys(YAML.load_file(path))
+        self.new(schema[:name], schema[:maintainer], schema[:links])
+      end
+
+      def initialize(name, maintainer, links)
+        @name = name
         @maintainer = maintainer
         @links = links
       end
