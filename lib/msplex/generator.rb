@@ -24,6 +24,7 @@ module Msplex
         generate_database_yml(database, service_dir)
         generate_dockerfile(service, service_dir)
         generate_gemfile(service, service_dir)
+        generate_migration_files(database, service_dir)
       end
     end
 
@@ -40,6 +41,16 @@ module Msplex
 
     def generate_gemfile(resource, base_dir)
       File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts resource.gemfile }
+    end
+
+    def generate_migration_file(migration, index, base_dir)
+      filename = "#{sprintf('%03d', index + 1)}_#{migration[:name]}.rb"
+      open(File.join(base_dir, "db", filename), "w+") { |f| f.puts migration[:migration] }
+    end
+
+    def generate_migration_files(database, base_dir)
+      FileUtils.mkdir(File.join(base_dir, "db"))
+      database.migrations.each.with_index { |migration, index| generate_migration_file(migration, index, base_dir) }
     end
 
     def service_database_pairs

@@ -197,7 +197,7 @@ GEMFILE
             compose: {
               image: "postgres:9.4",
             },
-            config: <<-CONFIG
+            config: <<-CONFIG,
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -217,7 +217,24 @@ test:
 production:
   database: sampledb_production
 CONFIG
-          ),
+            migrations: [
+              name: "create_users",
+              migration: <<-MIGRATION,
+class CreateUsers < ActiveRecord::Migration
+  def up
+    create_table :users do |t|
+      t.string :name
+      t.string :description
+      t.timestamps
+    end
+  end
+
+  def down
+    drop_table :users
+  end
+end
+MIGRATION
+          ]),
         ]
       end
 
@@ -241,6 +258,11 @@ CONFIG
       it "should generate config/database.yml" do
         subject
         expect(open(File.join(out_dir, "services", "hogeservice", "config", "database.yml")).read).to match(/default: &default/)
+      end
+
+      it "should generate migration file" do
+        subject
+        expect(open(File.join(out_dir, "services", "hogeservice", "db", "001_create_users.rb")).read).to match(/class CreateUsers/)
       end
     end
   end
