@@ -64,6 +64,21 @@ module Msplex
         end
       end
 
+      describe "#config_ru" do
+        subject { frontend.config_ru }
+
+        it "should generate config.ru" do
+          expect(subject).to eq(<<-CONFIGRU)
+require "rubygems"
+require "bundler"
+Bundler.require
+
+require "./app.rb"
+run App
+          CONFIGRU
+        end
+      end
+
       describe "#dockerfile" do
         subject { frontend.dockerfile }
 

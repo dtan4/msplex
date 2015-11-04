@@ -19,6 +19,17 @@ module Msplex
         }
       end
 
+      def config_ru
+        <<-CONFIGRU
+require "rubygems"
+require "bundler"
+Bundler.require
+
+require "./app.rb"
+run App
+CONFIGRU
+      end
+
       def dockerfile
         <<-DOCKERFILE
 FROM #{image}
