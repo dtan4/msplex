@@ -17,7 +17,24 @@ module Msplex
       write_compose(compose_yml)
     end
 
+    def generate_services
+      service_database_pairs.each do |service, database|
+        service_dir = File.join(@out_dir, "services", service.name)
+        FileUtils.mkdir_p(service_dir)
+        generate_dockerfile(service, service_dir)
+        generate_gemfile(service, service_dir)
+      end
+    end
+
     private
+
+    def generate_dockerfile(resource, base_dir)
+      File.open(File.join(base_dir, "Dockerfile"), "w+") { |f| f.puts resource.dockerfile }
+    end
+
+    def generate_gemfile(resource, base_dir)
+      File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts resource.gemfile }
+    end
 
     def service_database_pairs
       @service_database_pairs ||= @application.links.map do |link|

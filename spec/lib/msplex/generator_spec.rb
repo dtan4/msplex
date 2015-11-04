@@ -16,72 +16,19 @@ module Msplex
     include_context :uses_temp_dir
 
     let(:application) do
-      double(:application,
-        name: "sample",
-        maintainer: "Tanaka Taro",
-        links: [
-          "hogeservice:hogedb",
-          "fugaservice:fugadb",
-        ]
-      )
+      double(:application)
     end
 
     let(:frontend) do
-      double(:frontend,
-        compose: {
-          image: "ruby:2.2.3",
-          links: [
-            "hoge:hoge",
-            "fuga:fuga",
-          ]
-        }
-      )
+      double(:frontend)
     end
 
     let(:services) do
-      [
-        double(:service,
-          name: "hogeservice",
-          compose: {
-            image: "ruby:2.2.3",
-            links: [
-              "hogedb:db",
-            ],
-            environment: [
-              "RACK_ENV=production",
-            ]
-          }
-        ),
-        double(:service,
-          name: "fugaservice",
-          compose: {
-            image: "ruby:2.2.3",
-            links: [
-              "fugadb:db",
-            ],
-            environment: [
-              "RACK_ENV=production",
-            ]
-          }
-        )
-      ]
+      []
     end
 
     let(:databases) do
-      [
-        double(:database,
-          name: "hogedb",
-          compose: {
-            image: "postgres:9.4",
-          }
-        ),
-        double(:database,
-          name: "fugadb",
-          compose: {
-            image: "postgres:9.4",
-          }
-        )
-      ]
+      []
     end
 
     let(:generator) do
@@ -89,6 +36,75 @@ module Msplex
     end
 
     describe "#generate_compose" do
+      let(:application) do
+        double(:application,
+          name: "sample",
+          maintainer: "Tanaka Taro",
+          links: [
+            "hogeservice:hogedb",
+            "fugaservice:fugadb",
+          ]
+        )
+      end
+
+      let(:frontend) do
+        double(:frontend,
+          compose: {
+            image: "ruby:2.2.3",
+            links: [
+              "hoge:hoge",
+              "fuga:fuga",
+            ]
+          }
+        )
+      end
+
+      let(:services) do
+        [
+          double(:service,
+            name: "hogeservice",
+            compose: {
+              image: "ruby:2.2.3",
+              links: [
+                "hogedb:db",
+              ],
+              environment: [
+                "RACK_ENV=production",
+              ]
+            }
+          ),
+          double(:service,
+            name: "fugaservice",
+            compose: {
+              image: "ruby:2.2.3",
+              links: [
+                "fugadb:db",
+              ],
+              environment: [
+                "RACK_ENV=production",
+              ]
+            }
+          )
+        ]
+      end
+
+      let(:databases) do
+        [
+          double(:database,
+            name: "hogedb",
+            compose: {
+              image: "postgres:9.4",
+            }
+          ),
+          double(:database,
+            name: "fugadb",
+            compose: {
+              image: "postgres:9.4",
+            }
+          )
+        ]
+      end
+
       subject { generator.generate_compose }
 
       it "should generate docker-compose.yml" do
@@ -121,6 +137,85 @@ hogedb:
 fugadb:
   image: postgres:9.4
 COMPOSE
+      end
+    end
+
+    describe "#generate_services" do
+      let(:application) do
+        double(:application,
+          name: "sample",
+          maintainer: "Tanaka Taro",
+          links: [
+            "hogeservice:hogedb",
+          ]
+        )
+      end
+
+      let(:services) do
+        [
+          double(:service,
+            name: "hogeservice",
+            dockerfile: <<-DOCKERFILE,
+FROM ruby:2.2.3
+MAINTAINER Your Name <you@example.com>
+
+RUN bundle config --global frozen 1
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+ADD Gemfile /usr/src/app/
+ADD Gemfile.lock /usr/src/app/
+RUN bundle install --without test development --system
+
+ADD . /usr/src/app
+
+RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 9292
+CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
+DOCKERFILE
+            gemfile: <<-GEMFILE,
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "activesupport", require: "active_support/all"
+gem "activerecord"
+gem "sinatra-activerecord", require: "sinatra/activerecord"
+gem "rake"
+gem "json"
+gem "pg", "0.18.3"
+GEMFILE
+          )
+        ]
+      end
+
+      let(:databases) do
+        [
+          double(:database,
+            name: "hogedb",
+            compose: {
+              image: "postgres:9.4",
+            }
+          ),
+        ]
+      end
+
+      subject { generator.generate_services }
+
+      it "should create service directories" do
+        subject
+        expect(Dir.exists?(File.join(out_dir, "services", "hogeservice"))).to be true
+      end
+
+      it "should generate Dockerfile" do
+        subject
+        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "Dockerfile"))).to be true
+      end
+
+      it "should generate Gemfile" do
+        subject
+        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "Gemfile"))).to be true
       end
     end
   end

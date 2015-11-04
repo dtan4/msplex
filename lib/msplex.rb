@@ -1,4 +1,5 @@
 require "active_support/inflector"
+require "fileutils"
 require "forwardable"
 require "thor"
 require "yaml"
