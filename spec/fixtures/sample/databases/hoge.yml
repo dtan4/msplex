@@ -1,0 +1,7 @@
+name: hoge
+type: rdb
+fields:
+  - key: user_id
+    type: integer
+  - key: item_id
+    type: integer

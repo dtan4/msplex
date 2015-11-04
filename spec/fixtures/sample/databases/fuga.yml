@@ -1,0 +1,7 @@
+name: fuga
+type: rdb
+fields:
+  - key: name
+    type: string
+  - key: descripton
+    type: string

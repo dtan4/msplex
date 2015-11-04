@@ -1,0 +1,4 @@
+name: hoge
+actions:
+  - type: create
+  - type: delete
