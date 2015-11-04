@@ -1,15 +1,15 @@
 module Msplex
   module Resource
     class Frontend
-      attr_reader :elements
+      attr_reader :pages
 
       def self.read_schema(path)
         schema = Utils.symbolize_keys(YAML.load_file(path))
-        self.new(schema[:elements])
+        self.new(schema[:pages])
       end
 
-      def initialize(elements)
-        @elements = elements
+      def initialize(pages)
+        @pages = pages
       end
 
       def compose(services)

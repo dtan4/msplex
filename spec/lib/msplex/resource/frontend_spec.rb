@@ -3,12 +3,12 @@ require "spec_helper"
 module Msplex
   module Resource
     describe Frontend do
-      let(:elements) do
+      let(:pages) do
         []
       end
 
       let(:frontend) do
-        described_class.new(elements)
+        described_class.new(pages)
       end
 
       describe ".read_schema" do
@@ -20,7 +20,7 @@ module Msplex
           end
 
           it { is_expected.to be_a described_class }
-          its(:elements) { is_expected.to be_a Array }
+          its(:pages) { is_expected.to be_a Array }
         end
 
         context "when the given schema is invalid" do
