@@ -10,7 +10,7 @@ module Msplex
         rdb: "RDB",
       }
 
-      delegate %i(name tables compose config definitions gem image migrations create read) => :@delegator
+      delegate %i(name tables compose config definitions gem image migrations all create read) => :@delegator
 
       def self.read_schema(path)
         schema = Utils.symbolize_keys(YAML.load_file(path))

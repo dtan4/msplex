@@ -53,6 +53,10 @@ CONFIG
         tables.map { |table, fields| table_migration(table, fields) }
       end
 
+      def list(table)
+        "#{activerecord_class(table)}.all"
+      end
+
       def create(table, conditions)
         "#{activerecord_class(table)}.new(#{prettify_conditions(conditions)})"
       end

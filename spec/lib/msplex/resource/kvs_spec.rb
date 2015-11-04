@@ -75,6 +75,10 @@ module Msplex
         it { is_expected.to eq "" }
       end
 
+      describe "#all" do
+        pending
+      end
+
       describe "#create" do
         pending
       end

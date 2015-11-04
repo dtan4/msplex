@@ -146,6 +146,16 @@ MIGRATION
         end
       end
 
+      describe "#list" do
+        let(:table) do
+          :users
+        end
+
+        subject { rdb.list(table) }
+
+        it { is_expected.to eq 'User.all' }
+      end
+
       describe "#create" do
         let(:table) do
           :users
