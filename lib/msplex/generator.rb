@@ -17,6 +17,11 @@ module Msplex
       write_compose(compose_yml)
     end
 
+    def generate_frontend
+      frontend_dir = File.join(@out_dir, "frontend")
+      FileUtils.mkdir_p(frontend_dir)
+    end
+
     def generate_services
       service_database_pairs.each do |service, database|
         service_dir = File.join(@out_dir, "services", service.name)

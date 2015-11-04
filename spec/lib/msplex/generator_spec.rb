@@ -140,6 +140,61 @@ COMPOSE
       end
     end
 
+    describe "#generate_frontend" do
+      let(:frontend) do
+        double(:frontend,
+          config_ru: <<-CONFIGRU,
+require "rubygems"
+require "bundler"
+Bundler.require
+
+require "./app.rb"
+run App
+CONFIGRU
+          dockerfile: <<-DOCKERFILE,
+FROM ruby:2.2.3
+MAINTAINER Your Name <you@example.com>
+
+RUN bundle config --global frozen 1
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+ADD Gemfile /usr/src/app/
+ADD Gemfile.lock /usr/src/app/
+RUN bundle install --without test development --system
+
+ADD . /usr/src/app
+
+RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+EXPOSE 9292
+CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
+DOCKERFILE
+          gemfile: <<-GEMFILE,
+source "https://rubygems.org"
+
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "slim"
+gem "sinatra-websocket"
+gem "rack_csrf", require: "rack/csrf"
+gem "activesupport", require: "active_support/all"
+gem "rake"
+gem "json"
+GEMFILE
+        )
+      end
+
+      subject { generator.generate_frontend }
+
+      it "should create frontend directory" do
+        subject
+        expect(Dir.exists?(File.join(out_dir, "frontend"))).to be true
+      end
+    end
+
     describe "#generate_services" do
       let(:application) do
         double(:application,
