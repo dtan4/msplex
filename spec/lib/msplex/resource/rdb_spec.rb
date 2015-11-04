@@ -107,7 +107,9 @@ DEFINITIONS
 
         it "should return migration code" do
           expect(subject).to eql([
-                <<-MIGRATION,
+            {
+              name: "create_users",
+              migration: <<-MIGRATION,
 class CreateUsers < ActiveRecord::Migration
   def up
     create_table :users do |t|
@@ -122,7 +124,10 @@ class CreateUsers < ActiveRecord::Migration
   end
 end
 MIGRATION
-                <<-MIGRATION,
+            },
+            {
+              name: "create_items",
+              migration: <<-MIGRATION,
 class CreateItems < ActiveRecord::Migration
   def up
     create_table :items do |t|
@@ -136,6 +141,7 @@ class CreateItems < ActiveRecord::Migration
   end
 end
 MIGRATION
+            }
           ])
         end
       end

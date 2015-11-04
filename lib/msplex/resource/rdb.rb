@@ -94,12 +94,18 @@ DEFINITION
         "Create#{table.capitalize}"
       end
 
+      def migration_name_of(table)
+        "create_#{table}"
+      end
+
       def prettify_conditions(conditions)
         conditions.map { |key, value| "#{key}: #{value.inspect}" }.join(", ")
       end
 
       def table_migration(table, fields)
-        <<-MIGRATION
+        {
+          name: migration_name_of(table),
+          migration: <<-MIGRATION
 class #{migration_class_of(table)} < ActiveRecord::Migration
   def up
 #{Utils.indent(up_migration(table, fields), 4)}
@@ -110,6 +116,7 @@ class #{migration_class_of(table)} < ActiveRecord::Migration
   end
 end
 MIGRATION
+        }
       end
 
       def up_migration(table, fields)
