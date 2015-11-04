@@ -24,6 +24,7 @@ module Msplex
       generate_config_ru(@frontend, frontend_dir)
       generate_dockerfile(@frontend, frontend_dir)
       generate_gemfile(@frontend, frontend_dir)
+      generate_views(@frontend, frontend_dir)
     end
 
     def generate_services
@@ -58,6 +59,10 @@ module Msplex
       File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts resource.gemfile }
     end
 
+    def generate_layout_slim(frontend, base_dir)
+      File.open(File.join(base_dir, "views", "layout.slim"), "w+") { |f| f.puts frontend.layout_html }
+    end
+
     def generate_migration_file(migration, index, base_dir)
       filename = "#{sprintf('%03d', index + 1)}_#{migration[:name]}.rb"
       open(File.join(base_dir, "db", filename), "w+") { |f| f.puts migration[:migration] }
@@ -66,6 +71,16 @@ module Msplex
     def generate_migration_files(database, base_dir)
       FileUtils.mkdir(File.join(base_dir, "db"))
       database.migrations.each.with_index { |migration, index| generate_migration_file(migration, index, base_dir) }
+    end
+
+    def generate_page_slims(frontend, base_dir)
+      frontend.page_htmls.each { |page| File.open(File.join(base_dir, "views", "#{page[:name]}.slim"), "w+") { |f| f.puts page[:html] } }
+    end
+
+    def generate_views(frontend, base_dir)
+      FileUtils.mkdir(File.join(base_dir, "views"))
+      generate_layout_slim(frontend, base_dir)
+      generate_page_slims(frontend, base_dir)
     end
 
     def service_database_pairs

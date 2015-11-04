@@ -184,6 +184,28 @@ gem "activesupport", require: "active_support/all"
 gem "rake"
 gem "json"
 GEMFILE
+          layout_html: <<-HTML,
+doctype html
+html
+  head
+    meta charset="utf-8"
+    == csrf_meta_tag
+    title
+      | &lt;script&gt;sample&lt;/script&gt;
+  body
+    == yield
+HTML
+          page_htmls: [
+            {
+              name: "index",
+              html: <<-HTML
+div#root
+  ul
+  - @catalog_item_list.each do |obj|
+    li obj.name
+HTML
+            }
+          ]
         )
       end
 
@@ -207,6 +229,16 @@ GEMFILE
       it "should generate Gemfile" do
         subject
         expect(open(File.join(out_dir, "frontend", "Gemfile")).read).to match(/gem "sinatra"/)
+      end
+
+      it "should generate views/index.slim" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "views", "index.slim")).read).to match(/div#root/)
+      end
+
+      it "should generate views/layout.slim" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "views", "layout.slim")).read).to match(/doctype html/)
       end
     end
 
