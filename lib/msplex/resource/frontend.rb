@@ -71,7 +71,16 @@ GEMFILE
         "ruby:2.2.3"
       end
 
+      def page_htmls
+        pages.map { |page| { name: page[:name], html: convert_to_slim(page[:elements]) } }
+      end
+
       private
+
+      def convert_to_slim(elements)
+        # TODO
+        elements
+      end
 
       def links(services)
         services.map { |service| "#{service.name}:#{service.name}" }

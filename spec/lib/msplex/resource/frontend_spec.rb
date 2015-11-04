@@ -4,7 +4,18 @@ module Msplex
   module Resource
     describe Frontend do
       let(:pages) do
-        []
+        [
+          {
+            name: "index",
+            # FIXME
+            elements: <<-ELEMENTS
+div#root
+  ul
+  - @catalog_item_list.each do |obj|
+    li obj.name
+ELEMENTS
+          }
+        ]
       end
 
       let(:frontend) do
@@ -128,6 +139,24 @@ GEMFILE
         subject { frontend.image }
 
         it { is_expected.to eq "ruby:2.2.3" }
+      end
+
+      describe "#page_htmls" do
+        subject { frontend.page_htmls }
+
+        it "should generate Slim templates" do
+          expect(subject).to eql([
+            {
+              name: "index",
+              html: <<-HTML
+div#root
+  ul
+  - @catalog_item_list.each do |obj|
+    li obj.name
+HTML
+            }
+          ])
+        end
       end
     end
   end
