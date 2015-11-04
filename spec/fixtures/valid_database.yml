@@ -1,0 +1,8 @@
+name: sampledb
+type: rds
+tables:
+  users:
+    - key: name
+      type: string
+    - key: description
+      type: string

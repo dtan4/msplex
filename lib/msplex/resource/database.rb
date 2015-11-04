@@ -10,11 +10,16 @@ module Msplex
         rds: "RDS",
       }
 
-      delegate %i(compose config definitions gem image migration create read) => :@delegator
+      delegate %i(name tables compose config definitions gem image migration create read) => :@delegator
+
+      def self.read_schema(path)
+        schema = Utils.symbolize_keys(YAML.load_file(path))
+        self.new(schema[:type], schema[:name], schema[:tables])
+      end
 
       def initialize(type, name, tables)
-        raise InvalidDatabaseTypeError, "#{type} is invalid database type" unless DB_TYPES.keys.include?(type)
-        @delegator = eval(DB_TYPES[type]).new(name, tables)
+        raise InvalidDatabaseTypeError, "#{type} is invalid database type" unless DB_TYPES.keys.include?(type.to_sym)
+        @delegator = eval(DB_TYPES[type.to_sym]).new(name, tables)
       end
     end
   end

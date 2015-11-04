@@ -29,6 +29,24 @@ module Msplex
         described_class.new(type, name, tables)
       end
 
+      describe ".read_schema" do
+        subject { described_class.read_schema(path) }
+
+        context "when the given schema is valid" do
+          let(:path) do
+            fixture_path("valid_database.yml")
+          end
+
+          it { is_expected.to be_a described_class }
+          its(:name) { is_expected.to eq "sampledb" }
+          its(:tables) { is_expected.to eql({ users: [{ key: "name", type: "string" }, { key: "description", type: "string" }] }) }
+        end
+
+        context "when the given schema is invalid" do
+          pending
+        end
+      end
+
       describe "#initialize" do
         context "if type is :rds" do
           let(:type) do
