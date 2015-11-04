@@ -1,4 +1,5 @@
 require "active_support/inflector"
+require "erb"
 require "fileutils"
 require "forwardable"
 require "thor"

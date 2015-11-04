@@ -71,6 +71,20 @@ GEMFILE
         "ruby:2.2.3"
       end
 
+      def layout_html(application)
+        <<-HTML
+doctype html
+html
+  head
+    meta charset="utf-8"
+    == csrf_meta_tag
+    title
+      | #{ERB::Util.html_escape(application.name)}
+  body
+    == yield
+HTML
+      end
+
       def page_htmls
         pages.map { |page| { name: page[:name], html: convert_to_slim(page[:elements]) } }
       end

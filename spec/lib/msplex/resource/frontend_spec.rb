@@ -141,6 +141,28 @@ GEMFILE
         it { is_expected.to eq "ruby:2.2.3" }
       end
 
+      describe "#layout_html" do
+        let(:application) do
+          double(:application, name: "<script>sample</script>")
+        end
+
+        subject { frontend.layout_html(application) }
+
+        it "should generate Slim template of layout" do
+          expect(subject).to eq <<-HTML
+doctype html
+html
+  head
+    meta charset="utf-8"
+    == csrf_meta_tag
+    title
+      | &lt;script&gt;sample&lt;/script&gt;
+  body
+    == yield
+HTML
+        end
+      end
+
       describe "#page_htmls" do
         subject { frontend.page_htmls }
 
