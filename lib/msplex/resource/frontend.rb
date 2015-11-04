@@ -45,6 +45,10 @@ class App < Sinatra::Base
     rescue
       {}
     end
+
+    def endpoint_of(service, action)
+      "http://" << service << "/" << action
+    end
   end
 
 #{Utils.indent(endpoints, 2)}
