@@ -18,5 +18,19 @@ module Msplex
       end
     end
     module_function :symbolize_keys
+
+    def desymbolize_keys(argument)
+      if argument.class == Hash
+        argument.inject({}) do |result, (key, value)|
+          result[key.to_s] = desymbolize_keys(value)
+          result
+        end
+      elsif argument.class == Array
+        argument.map { |arg| desymbolize_keys(arg) }
+      else
+        argument
+      end
+    end
+    module_function :desymbolize_keys
   end
 end
