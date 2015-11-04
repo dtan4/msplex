@@ -90,15 +90,6 @@ module Msplex
         end
       end
 
-      describe "#read" do
-        subject { database.read }
-
-        it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:read)
-          subject
-        end
-      end
-
       describe "#gem" do
         subject { database.gem }
 
@@ -122,6 +113,15 @@ module Msplex
 
         it "should delegate to child class" do
           expect_any_instance_of(Msplex::Resource::RDS).to receive(:migration)
+          subject
+        end
+      end
+
+      describe "#read" do
+        subject { database.read }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDS).to receive(:read)
           subject
         end
       end
