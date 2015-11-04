@@ -69,8 +69,8 @@ module Msplex
         it { is_expected.to eq "redis:3.0" }
       end
 
-      describe "#migration" do
-        subject { kvs.migration }
+      describe "#migrations" do
+        subject { kvs.migrations }
 
         it { is_expected.to eq "" }
       end

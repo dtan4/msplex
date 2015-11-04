@@ -49,7 +49,7 @@ CONFIG
         "postgres:9.4"
       end
 
-      def migration
+      def migrations
         tables.map { |table, fields| table_migration(table, fields) }
       end
 

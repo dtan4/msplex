@@ -30,7 +30,7 @@ module Msplex
         "redis:3.0"
       end
 
-      def migration
+      def migrations
         ""
       end
 

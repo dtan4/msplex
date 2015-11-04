@@ -126,11 +126,11 @@ module Msplex
         end
       end
 
-      describe "#migration" do
-        subject { database.migration }
+      describe "#migrations" do
+        subject { database.migrations }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDB).to receive(:migration)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:migrations)
           subject
         end
       end

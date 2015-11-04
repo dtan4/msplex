@@ -102,8 +102,8 @@ DEFINITIONS
         it { is_expected.to eq "postgres:9.4" }
       end
 
-      describe "#migration" do
-        subject { rdb.migration }
+      describe "#migrations" do
+        subject { rdb.migrations }
 
         it "should return migration code" do
           expect(subject).to eql([
