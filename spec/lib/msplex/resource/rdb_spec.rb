@@ -44,7 +44,7 @@ module Msplex
       describe "#config" do
         subject { rdb.config }
 
-        it "should generate rdb.yml" do
+        it "should generate database.yml" do
           expect(subject).to eq <<-CONFIG
 default: &default
   adapter: postgresql
