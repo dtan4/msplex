@@ -15,6 +15,24 @@ module Msplex
         described_class.new(name, actions)
       end
 
+      describe ".read_schema" do
+        subject { described_class.read_schema(path) }
+
+        context "when the given schema is valid" do
+          let(:path) do
+            fixture_path("valid_service.yml")
+          end
+
+          it { is_expected.to be_a described_class }
+          its(:name) { is_expected.to eq "sampleservice" }
+          its(:actions) { is_expected.to eql [{ type: "get" }, { type: "list" }] }
+        end
+
+        context "when the given schema is invalid" do
+          pending
+        end
+      end
+
       describe "#compose" do
         subject { service.compose(database) }
 

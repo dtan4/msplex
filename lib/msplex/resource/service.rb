@@ -3,6 +3,11 @@ module Msplex
     class Service
       attr_reader :name, :actions
 
+      def self.read_schema(path)
+        schema = Utils.symbolize_keys(YAML.load_file(path))
+        self.new(schema[:name], schema[:actions])
+      end
+
       def initialize(name, actions)
         @name = name
         @actions = actions

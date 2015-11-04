@@ -1,0 +1,4 @@
+name: sampleservice
+actions:
+  - type: get
+  - type: list

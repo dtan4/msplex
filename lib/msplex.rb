@@ -1,6 +1,7 @@
 require "active_support/inflector"
 require "forwardable"
 require "thor"
+require "yaml"
 
 require "msplex/cli"
 require "msplex/generator"
