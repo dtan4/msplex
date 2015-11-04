@@ -193,6 +193,21 @@ GEMFILE
         subject
         expect(Dir.exists?(File.join(out_dir, "frontend"))).to be true
       end
+
+      it "should generate config.ru" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "config.ru")).read).to match(/require "rubygems"/)
+      end
+
+      it "should generate Dockerfile" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
+      end
+
+      it "should generate Gemfile" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "Gemfile")).read).to match(/gem "sinatra"/)
+      end
     end
 
     describe "#generate_services" do

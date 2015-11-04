@@ -20,6 +20,10 @@ module Msplex
     def generate_frontend
       frontend_dir = File.join(@out_dir, "frontend")
       FileUtils.mkdir_p(frontend_dir)
+
+      generate_config_ru(@frontend, frontend_dir)
+      generate_dockerfile(@frontend, frontend_dir)
+      generate_gemfile(@frontend, frontend_dir)
     end
 
     def generate_services
@@ -37,8 +41,8 @@ module Msplex
 
     private
 
-    def generate_config_ru(service, base_dir)
-      File.open(File.join(base_dir, "config.ru"), "w+") { |f| f.puts service.config_ru }
+    def generate_config_ru(resource, base_dir)
+      File.open(File.join(base_dir, "config.ru"), "w+") { |f| f.puts resource.config_ru }
     end
 
     def generate_database_yml(database, base_dir)
