@@ -22,10 +22,6 @@ module Msplex
         ""
       end
 
-      def find
-
-      end
-
       def gem
         { gem: "redis", version: "3.2.1" }
       end
@@ -36,6 +32,10 @@ module Msplex
 
       def migration
         ""
+      end
+
+      def read
+
       end
     end
   end

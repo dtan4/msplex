@@ -52,10 +52,6 @@ module Msplex
         it { is_expected.to eq "" }
       end
 
-      describe "#find" do
-        pending
-      end
-
       describe "#gem" do
         subject { kvs.gem }
 
@@ -77,6 +73,10 @@ module Msplex
         subject { kvs.migration }
 
         it { is_expected.to eq "" }
+      end
+
+      describe "#read" do
+        pending
       end
     end
   end

@@ -90,11 +90,11 @@ module Msplex
         end
       end
 
-      describe "#find" do
-        subject { database.find }
+      describe "#read" do
+        subject { database.read }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:find)
+          expect_any_instance_of(Msplex::Resource::RDS).to receive(:read)
           subject
         end
       end

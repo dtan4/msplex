@@ -85,20 +85,6 @@ DEFINITIONS
         end
       end
 
-      describe "#find" do
-        let(:table) do
-          :users
-        end
-
-        let(:conditions) do
-          { id: 1, name: "hoge" }
-        end
-
-        subject { rds.find(table, conditions) }
-
-        it { is_expected.to eq 'User.find_by(id: 1, name: "hoge")' }
-      end
-
       describe "#gem" do
         subject { rds.gem }
 
@@ -152,6 +138,20 @@ end
 MIGRATION
           ])
         end
+      end
+
+      describe "#read" do
+        let(:table) do
+          :users
+        end
+
+        let(:conditions) do
+          { id: 1, name: "hoge" }
+        end
+
+        subject { rds.read(table, conditions) }
+
+        it { is_expected.to eq 'User.where(id: 1, name: "hoge")' }
       end
     end
   end

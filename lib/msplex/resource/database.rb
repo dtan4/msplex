@@ -10,7 +10,7 @@ module Msplex
         rds: "RDS",
       }
 
-      delegate %i(compose config definitions find gem image migration) => :@delegator
+      delegate %i(compose config definitions gem image migration read) => :@delegator
 
       def initialize(type, name, tables)
         raise InvalidDatabaseTypeError, "#{type} is invalid database type" unless DB_TYPES.keys.include?(type)

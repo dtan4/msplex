@@ -41,10 +41,6 @@ CONFIG
         tables.map { |table, fields| activerecord_definition(table, fields) }
       end
 
-      def find(table, conditions)
-        "#{activerecord_class(table)}.find_by(#{find_conditions(conditions)})"
-      end
-
       def gem
         { gem: "pg", version: "0.18.3" }
       end
@@ -55,6 +51,10 @@ CONFIG
 
       def migration
         tables.map { |table, fields| table_migration(table, fields) }
+      end
+
+      def read(table, conditions)
+        "#{activerecord_class(table)}.where(#{read_conditions(conditions)})"
       end
 
       private
@@ -86,13 +86,14 @@ DEFINITION
           .join("\n")
       end
 
-      def find_conditions(conditions)
-        conditions.map { |key, value| "#{key}: #{value.inspect}" }.join(", ")
-      end
-
       def migration_class_of(table)
         "Create#{table.capitalize}"
       end
+
+      def read_conditions(conditions)
+        conditions.map { |key, value| "#{key}: #{value.inspect}" }.join(", ")
+      end
+
 
       def table_migration(table, fields)
         <<-MIGRATION
