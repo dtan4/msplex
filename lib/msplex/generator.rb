@@ -10,7 +10,7 @@ module Msplex
       @out_dir = out_dir
     end
 
-    def compose
+    def generate_compose
       compose_yml = { frontend: @frontend.compose(@services) }
       service_database_pairs.each { |service, database| compose_yml[service.name] = service.compose(database) }
       @databases.each { |database| compose_yml[database.name] = database.compose }

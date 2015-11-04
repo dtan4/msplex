@@ -88,8 +88,8 @@ module Msplex
       described_class.new(application, frontend, services, databases, out_dir)
     end
 
-    describe "#compose" do
-      subject { generator.compose }
+    describe "#generate_compose" do
+      subject { generator.generate_compose }
 
       it "should generate docker-compose.yml" do
         subject
