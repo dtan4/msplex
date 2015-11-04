@@ -16,12 +16,38 @@ module Msplex
       end
 
       describe "#compose" do
-        subject { frontend.compose }
+        subject { frontend.compose(services) }
 
-        it "should generate docker-compose.yml" do
-          expect(subject).to eql({
-            image: "ruby:2.2.3"
-          })
+        context "when the frontend has services" do
+          let(:services) do
+            [
+              double(:hoge_service, name: "hoge"),
+              double(:fuga_service, name: "fuga"),
+            ]
+          end
+
+          it "should generate docker-compose.yml linked with services" do
+            expect(subject).to eql({
+              image: "ruby:2.2.3",
+              links: [
+                "hoge:hoge",
+                "fuga:fuga",
+              ]
+            })
+          end
+        end
+
+        context "when the frontend has no service" do
+          let(:services) do
+            []
+          end
+
+          it "should generate docker-compose.yml linked with services" do
+            expect(subject).to eql({
+              image: "ruby:2.2.3",
+              links: [],
+            })
+          end
         end
       end
 

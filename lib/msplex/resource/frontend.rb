@@ -8,9 +8,10 @@ module Msplex
         @elements = elements
       end
 
-      def compose
+      def compose(services)
         {
           image: image,
+          links: links(services),
         }
       end
 
@@ -53,6 +54,12 @@ GEMFILE
 
       def image
         "ruby:2.2.3"
+      end
+
+      private
+
+      def links(services)
+        services.map { |service| "#{service.name}:#{service.name}" }
       end
     end
   end
