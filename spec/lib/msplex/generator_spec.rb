@@ -196,7 +196,27 @@ GEMFILE
             name: "hogedb",
             compose: {
               image: "postgres:9.4",
-            }
+            },
+            config: <<-CONFIG
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  user: postgres
+  host: db
+  port: 5432
+
+development:
+  <<: *default
+  database: sampledb_development
+
+test:
+  <<: *default
+  database: sampledb_test
+
+production:
+  database: sampledb_production
+CONFIG
           ),
         ]
       end
@@ -216,6 +236,11 @@ GEMFILE
       it "should generate Gemfile" do
         subject
         expect(File.exists?(File.join(out_dir, "services", "hogeservice", "Gemfile"))).to be true
+      end
+
+      it "should generate config/database.yml" do
+        subject
+        expect(File.exists?(File.join(out_dir, "services", "hogeservice", "config", "database.yml"))).to be true
       end
     end
   end

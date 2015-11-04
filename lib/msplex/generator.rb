@@ -21,12 +21,18 @@ module Msplex
       service_database_pairs.each do |service, database|
         service_dir = File.join(@out_dir, "services", service.name)
         FileUtils.mkdir_p(service_dir)
+        generate_database_yml(database, service_dir)
         generate_dockerfile(service, service_dir)
         generate_gemfile(service, service_dir)
       end
     end
 
     private
+
+    def generate_database_yml(database, base_dir)
+      FileUtils.mkdir(File.join(base_dir, "config"))
+      File.open(File.join(base_dir, "config", "database.yml"), "w+") { |f| f.puts database.config }
+    end
 
     def generate_dockerfile(resource, base_dir)
       File.open(File.join(base_dir, "Dockerfile"), "w+") { |f| f.puts resource.dockerfile }
