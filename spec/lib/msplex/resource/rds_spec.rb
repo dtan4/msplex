@@ -140,6 +140,20 @@ MIGRATION
         end
       end
 
+      describe "#create" do
+        let(:table) do
+          :users
+        end
+
+        let(:conditions) do
+          { id: 1, name: "hoge" }
+        end
+
+        subject { rds.create(table, conditions) }
+
+        it { is_expected.to eq 'User.new(id: 1, name: "hoge")' }
+      end
+
       describe "#read" do
         let(:table) do
           :users

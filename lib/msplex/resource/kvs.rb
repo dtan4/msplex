@@ -34,6 +34,10 @@ module Msplex
         ""
       end
 
+      def create
+
+      end
+
       def read
 
       end

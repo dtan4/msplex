@@ -117,6 +117,15 @@ module Msplex
         end
       end
 
+      describe "#create" do
+        subject { database.create }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDS).to receive(:create)
+          subject
+        end
+      end
+
       describe "#read" do
         subject { database.read }
 

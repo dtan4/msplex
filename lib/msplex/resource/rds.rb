@@ -53,8 +53,12 @@ CONFIG
         tables.map { |table, fields| table_migration(table, fields) }
       end
 
+      def create(table, conditions)
+        "#{activerecord_class(table)}.new(#{prettify_conditions(conditions)})"
+      end
+
       def read(table, conditions)
-        "#{activerecord_class(table)}.where(#{read_conditions(conditions)})"
+        "#{activerecord_class(table)}.where(#{prettify_conditions(conditions)})"
       end
 
       private
@@ -90,10 +94,9 @@ DEFINITION
         "Create#{table.capitalize}"
       end
 
-      def read_conditions(conditions)
+      def prettify_conditions(conditions)
         conditions.map { |key, value| "#{key}: #{value.inspect}" }.join(", ")
       end
-
 
       def table_migration(table, fields)
         <<-MIGRATION
