@@ -1,7 +1,7 @@
 module Msplex
   module Utils
     def indent(lines, padding)
-      lines.split("\n").map { |line| "#{' ' * padding}#{line}" }.join("\n")
+      lines.split("\n").map { |line| line.length > 0 ? "#{' ' * padding}#{line}" : line }.join("\n")
     end
     module_function :indent
 

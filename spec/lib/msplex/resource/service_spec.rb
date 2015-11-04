@@ -8,7 +8,10 @@ module Msplex
       end
 
       let(:actions) do
-        []
+        [
+          { type: "create", table: "users" },
+          { type: "list", table: "users" },
+        ]
       end
 
       let(:service) do
@@ -30,6 +33,72 @@ module Msplex
 
         context "when the given schema is invalid" do
           pending
+        end
+      end
+
+      describe "#app_rb" do
+        let(:database) do
+          double(:database,
+            definitions: [<<-DEFINITION],
+class User < ActiveRecord::Base
+end
+DEFINITION
+            list: "User.all",
+            create: "User.new(name: hoge)",
+          )
+        end
+
+        subject { service.app_rb(database) }
+
+        it "should generate app.rb" do
+          expect(subject).to eq <<-APPRB
+class User < ActiveRecord::Base
+end
+
+class App < Sinatra::Base
+  configure do
+    register Sinatra::ActiveRecordExtension
+    set :sockets, []
+    use Rack::Session::Cookie, expire_after: 3600, secret: "salt"
+    use Rack::Csrf, raise: true
+    Slim::Engine.default_options[:pretty] = true
+  end
+
+  helpers do
+    def csrf_meta_tag
+      Rack::Csrf.csrf_metatag(env)
+    end
+
+    def param_str(parameters)
+      parameters.map { |key, value| key.to_s + "=" + CGI.escape(value.to_s) }.join("&")
+    end
+
+    def http_get(endpoint, parameters)
+      uri = URI.parse(endpoint + "?" + param_str(parameters))
+      JSON.parse(Net::HTTP.get_response(uri).body, symbolize_names: true)
+    rescue
+      {}
+    end
+
+    def http_post(endpoint, parameters)
+      uri = URI.parse(endpoint)
+      JSON.parse(Net::HTTP.post_form(uri, parameters).body, symbolize_names: true)
+    rescue
+      {}
+    end
+
+    def endpoint_of(service, action)
+      "http://" << service << "/" << action
+    end
+  end
+
+  post "/users" do
+  end
+
+  get "/users" do
+  end
+end
+APPRB
         end
       end
 
