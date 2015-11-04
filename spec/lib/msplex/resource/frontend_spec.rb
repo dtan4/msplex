@@ -3,16 +3,29 @@ require "spec_helper"
 module Msplex
   module Resource
     describe Frontend do
-      let(:name) do
-        "sample"
-      end
-
       let(:elements) do
         []
       end
 
       let(:frontend) do
-        described_class.new(name, elements)
+        described_class.new(elements)
+      end
+
+      describe ".read_schema" do
+        subject { described_class.read_schema(path) }
+
+        context "when the given schema is valid" do
+          let(:path) do
+            fixture_path("valid_frontend.yml")
+          end
+
+          it { is_expected.to be_a described_class }
+          its(:elements) { is_expected.to be_a Array }
+        end
+
+        context "when the given schema is invalid" do
+          pending
+        end
       end
 
       describe "#compose" do
