@@ -4,7 +4,7 @@ module Msplex
   module Resource
     describe Database do
       let(:type) do
-        :rds
+        :rdb
       end
 
       let(:name) do
@@ -48,9 +48,9 @@ module Msplex
       end
 
       describe "#initialize" do
-        context "if type is :rds" do
+        context "if type is :rdb" do
           let(:type) do
-            :rds
+            :rdb
           end
 
           it "should return new Database instance" do
@@ -85,7 +85,7 @@ module Msplex
         subject { database.compose }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:compose)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:compose)
           subject
         end
       end
@@ -94,7 +94,7 @@ module Msplex
         subject { database.config }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:config)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:config)
           subject
         end
       end
@@ -103,7 +103,7 @@ module Msplex
         subject { database.definitions }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:definitions)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:definitions)
           subject
         end
       end
@@ -112,7 +112,7 @@ module Msplex
         subject { database.gem }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:gem)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:gem)
           subject
         end
       end
@@ -121,7 +121,7 @@ module Msplex
         subject { database.image }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:image)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:image)
           subject
         end
       end
@@ -130,7 +130,7 @@ module Msplex
         subject { database.migration }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:migration)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:migration)
           subject
         end
       end
@@ -139,7 +139,7 @@ module Msplex
         subject { database.create }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:create)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:create)
           subject
         end
       end
@@ -148,7 +148,7 @@ module Msplex
         subject { database.read }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDS).to receive(:read)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:read)
           subject
         end
       end

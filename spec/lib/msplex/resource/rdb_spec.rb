@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Msplex
   module Resource
-    describe RDS do
+    describe RDB do
       let(:name) do
         "sampledb"
       end
@@ -21,18 +21,18 @@ module Msplex
         }
       end
 
-      let(:rds) do
+      let(:rdb) do
         described_class.new(name, tables)
       end
 
       describe "#initialize" do
-        it "should return new RDS instance" do
-          expect(rds).to be_a described_class
+        it "should return new RDB instance" do
+          expect(rdb).to be_a described_class
         end
       end
 
       describe "#compose" do
-        subject { rds.compose }
+        subject { rdb.compose }
 
         it "should generate docker-compose.yml" do
           expect(subject).to eql({
@@ -42,9 +42,9 @@ module Msplex
       end
 
       describe "#config" do
-        subject { rds.config }
+        subject { rdb.config }
 
-        it "should generate rds.yml" do
+        it "should generate rdb.yml" do
           expect(subject).to eq <<-CONFIG
 default: &default
   adapter: postgresql
@@ -69,7 +69,7 @@ CONFIG
       end
 
       describe "#definitions"do
-        subject { rds.definitions }
+        subject { rdb.definitions }
 
         it "should generate class defitions of ActiveRecord" do
           expect(subject).to eql([
@@ -86,7 +86,7 @@ DEFINITIONS
       end
 
       describe "#gem" do
-        subject { rds.gem }
+        subject { rdb.gem }
 
         it "should return adapter gem and its version" do
           expect(subject).to eql({
@@ -97,13 +97,13 @@ DEFINITIONS
       end
 
       describe "#image" do
-        subject { rds.image }
+        subject { rdb.image }
 
         it { is_expected.to eq "postgres:9.4" }
       end
 
       describe "#migration" do
-        subject { rds.migration }
+        subject { rdb.migration }
 
         it "should return migration code" do
           expect(subject).to eql([
@@ -149,7 +149,7 @@ MIGRATION
           { id: 1, name: "hoge" }
         end
 
-        subject { rds.create(table, conditions) }
+        subject { rdb.create(table, conditions) }
 
         it { is_expected.to eq 'User.new(id: 1, name: "hoge")' }
       end
@@ -163,7 +163,7 @@ MIGRATION
           { id: 1, name: "hoge" }
         end
 
-        subject { rds.read(table, conditions) }
+        subject { rdb.read(table, conditions) }
 
         it { is_expected.to eq 'User.where(id: 1, name: "hoge")' }
       end

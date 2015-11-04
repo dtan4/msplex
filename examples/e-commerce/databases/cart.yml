@@ -1,6 +1,6 @@
 database:
   name: cart
-  type: rds
+  type: rdb
   fields:
     - key: user_id
       type: integer

@@ -1,6 +1,6 @@
 database:
   name: catalog
-  type: rds
+  type: rdb
   fields:
     - key: name
       type: string

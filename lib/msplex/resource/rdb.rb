@@ -1,6 +1,6 @@
 module Msplex
   module Resource
-    class RDS < Database
+    class RDB < Database
       attr_reader :name, :tables
 
       def initialize(name, tables)

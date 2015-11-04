@@ -1,5 +1,5 @@
 name: sampledb
-type: rds
+type: rdb
 tables:
   users:
     - key: name

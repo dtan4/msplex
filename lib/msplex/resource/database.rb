@@ -7,7 +7,7 @@ module Msplex
 
       DB_TYPES = {
         kvs: "KVS",
-        rds: "RDS",
+        rdb: "RDB",
       }
 
       delegate %i(name tables compose config definitions gem image migration create read) => :@delegator
