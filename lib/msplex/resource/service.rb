@@ -137,8 +137,13 @@ GEMFILE
             defined = DEFINED_ACTION[action[:type].to_sym]
             <<-ENDPOINT
 #{defined[:type]} "/#{action[:table]}" do
+  content_type :json
+  result = {}
+
 #{Utils.indent(database.params, 2)}
 #{Utils.indent(database.send(action[:type]), 2)}
+
+  result.to_json
 end
 ENDPOINT
           else

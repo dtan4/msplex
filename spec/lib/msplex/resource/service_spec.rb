@@ -46,11 +46,17 @@ DEFINITION
             params: <<-PARAMS,
 user_name = params[:users][:name]
 user_description = params[:users][:description]
+
 PARAMS
-            list: "users = User.all",
+            list: <<-LIST,
+users = User.all
+result[:users] = users
+LIST
             create: <<-CREATE,
 user = User.new(name: user_name)
 user.save!
+result[:users] ||= []
+result[:users] << user
 CREATE
           )
         end
@@ -100,16 +106,29 @@ class App < Sinatra::Base
   end
 
   post "/users" do
+    content_type :json
+    result = {}
+
     user_name = params[:users][:name]
     user_description = params[:users][:description]
     user = User.new(name: user_name)
     user.save!
+    result[:users] ||= []
+    result[:users] << user
+
+    result.to_json
   end
 
   get "/users" do
+    content_type :json
+    result = {}
+
     user_name = params[:users][:name]
     user_description = params[:users][:description]
     users = User.all
+    result[:users] = users
+
+    result.to_json
   end
 end
 APPRB
