@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "msplex"
+
+Msplex::Cli.start(ARGV)
