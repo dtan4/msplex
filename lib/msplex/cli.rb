@@ -1,5 +1,5 @@
 module Msplex
-  class Cli < Thor
+  class CLI < Thor
     desc "new", "Create a new application"
     def new
       raise NotImplementedError

@@ -2,4 +2,4 @@
 
 require "msplex"
 
-Msplex::Cli.start(ARGV)
+Msplex::CLI.start(ARGV)
