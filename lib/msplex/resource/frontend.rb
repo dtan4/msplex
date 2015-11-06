@@ -58,7 +58,7 @@ APPRB
 
       def compose(services)
         {
-          image: image,
+          build: "frontend",
           links: links(services),
         }
       end

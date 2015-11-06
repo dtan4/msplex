@@ -23,7 +23,7 @@ module Msplex
 
       def compose(database)
         {
-          image: image,
+          build: "services/#{@name}",
           links: links(database),
         }
       end

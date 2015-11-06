@@ -145,7 +145,7 @@ APPRB
 
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
-              image: "ruby:2.2.3",
+              build: "services/sampleservice",
               links: [
                 "sampleservice-db:db",
               ],
@@ -160,7 +160,7 @@ APPRB
 
           it "should generate docker-compose.yml" do
             expect(subject).to eql({
-              image: "ruby:2.2.3",
+              build: "services/sampleservice",
               links: [],
             })
           end

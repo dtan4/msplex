@@ -102,7 +102,7 @@ APPRB
 
           it "should generate docker-compose.yml linked with services" do
             expect(subject).to eql({
-              image: "ruby:2.2.3",
+              build: "frontend",
               links: [
                 "hoge:hoge",
                 "fuga:fuga",
@@ -118,7 +118,7 @@ APPRB
 
           it "should generate docker-compose.yml linked with services" do
             expect(subject).to eql({
-              image: "ruby:2.2.3",
+              build: "frontend",
               links: [],
             })
           end
