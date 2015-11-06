@@ -54,9 +54,9 @@ CONFIG
       end
 
       def params(table)
-        tables[table.to_sym].map do |field|
-          "#{param_name_of(table, field[:key])} = params[:#{table}][:#{field[:key]}]"
-        end.join("\n") << "\n"
+        [
+          param_assignment_statement(table, "id")
+        ].concat(tables[table.to_sym].map { |field| param_assignment_statement(table, field[:key]) }).join("\n") << "\n"
       end
 
       def list(table)
@@ -106,6 +106,10 @@ DEFINITION
 
       def migration_name_of(table)
         "create_#{table}"
+      end
+
+      def param_assignment_statement(table, param)
+        "#{param_name_of(table, param)} = params[:#{table}][:#{param}]"
       end
 
       def param_name_of(table, param)

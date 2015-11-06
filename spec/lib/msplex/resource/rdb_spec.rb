@@ -153,6 +153,7 @@ MIGRATION
 
         it "should generate assignment statements" do
           expect(subject).to eq <<-PARAMS
+user_id = params[:users][:id]
 user_name = params[:users][:name]
 user_description = params[:users][:description]
 PARAMS
