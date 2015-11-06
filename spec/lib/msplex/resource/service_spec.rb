@@ -47,8 +47,11 @@ DEFINITION
 user_name = params[:users][:name]
 user_description = params[:users][:description]
 PARAMS
-            list: "User.all",
-            create: "User.new(name: hoge)",
+            list: "users = User.all",
+            create: <<-CREATE,
+user = User.new(name: user_name)
+user.save!
+CREATE
           )
         end
 
@@ -99,12 +102,14 @@ class App < Sinatra::Base
   post "/users" do
     user_name = params[:users][:name]
     user_description = params[:users][:description]
-
-    user = User.create(name: user_name)
+    user = User.new(name: user_name)
     user.save!
   end
 
   get "/users" do
+    user_name = params[:users][:name]
+    user_description = params[:users][:description]
+    users = User.all
   end
 end
 APPRB

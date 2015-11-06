@@ -137,6 +137,8 @@ GEMFILE
             defined = DEFINED_ACTION[action[:type].to_sym]
             <<-ENDPOINT
 #{defined[:type]} "/#{action[:table]}" do
+#{Utils.indent(database.params, 2)}
+#{Utils.indent(database.send(action[:type]), 2)}
 end
 ENDPOINT
           else
