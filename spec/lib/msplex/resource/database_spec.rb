@@ -135,6 +135,15 @@ module Msplex
         end
       end
 
+      describe "#params" do
+        subject { database.params }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:params)
+          subject
+        end
+      end
+
       describe "#all" do
         subject { database.all }
 

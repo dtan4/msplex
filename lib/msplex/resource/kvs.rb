@@ -34,6 +34,12 @@ module Msplex
         ""
       end
 
+      def params(table)
+        tables[table.to_sym].map do |field|
+          "#{table.to_s.singularize}_#{field[:key]} = params[:#{table}][:#{field[:key]}]"
+        end.join("\n") << "\n"
+      end
+
       def all
 
       end

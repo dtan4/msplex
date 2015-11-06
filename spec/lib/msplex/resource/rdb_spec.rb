@@ -10,12 +10,10 @@ module Msplex
       let(:tables) do
         {
           users: [
-            { key: "id", type: :int },
             { key: "name", type: :string },
             { key: "description", type: :string },
           ],
           items: [
-            { key: "id", type: :int },
             { key: "name", type: :string },
           ]
         }
@@ -143,6 +141,21 @@ end
 MIGRATION
             }
           ])
+        end
+      end
+
+      describe "#params" do
+        let(:table) do
+          :users
+        end
+
+        subject { rdb.params(table) }
+
+        it "should generate assignment statements" do
+          expect(subject).to eq <<-PARAMS
+user_name = params[:users][:name]
+user_description = params[:users][:description]
+PARAMS
         end
       end
 

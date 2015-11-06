@@ -10,12 +10,10 @@ module Msplex
       let(:tables) do
         {
           users: [
-            { key: "id", type: :int },
             { key: "name", type: :string },
             { key: "description", type: :string },
           ],
           items: [
-            { key: "id", type: :int },
             { key: "name", type: :string },
           ]
         }
@@ -73,6 +71,21 @@ module Msplex
         subject { kvs.migrations }
 
         it { is_expected.to eq "" }
+      end
+
+      describe "#params" do
+        let(:table) do
+          :users
+        end
+
+        subject { kvs.params(table) }
+
+        it "should generate assignment statements" do
+          expect(subject).to eq <<-PARAMS
+user_name = params[:users][:name]
+user_description = params[:users][:description]
+PARAMS
+        end
       end
 
       describe "#all" do

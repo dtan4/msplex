@@ -53,6 +53,12 @@ CONFIG
         tables.map { |table, fields| table_migration(table, fields) }
       end
 
+      def params(table)
+        tables[table.to_sym].map do |field|
+          "#{table.to_s.singularize}_#{field[:key]} = params[:#{table}][:#{field[:key]}]"
+        end.join("\n") << "\n"
+      end
+
       def list(table)
         "#{activerecord_class(table)}.all"
       end
