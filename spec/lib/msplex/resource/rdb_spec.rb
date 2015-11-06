@@ -170,6 +170,7 @@ PARAMS
         it "should generate code for listing user" do
           expect(subject).to eq <<-LIST
 users = User.all
+result[:users] = users
 LIST
         end
       end
@@ -189,6 +190,8 @@ LIST
           expect(subject).to eq <<-CREATE
 user = User.new(name: user_name)
 user.save!
+result[:users] ||= []
+result[:users] << user
 CREATE
         end
       end
@@ -207,6 +210,8 @@ CREATE
         it "should generate code for reading user" do
           expect(subject).to eq <<-READ
 user = User.where(id: user_id, name: user_name)
+result[:users] ||= []
+result[:users] << user
 READ
         end
       end

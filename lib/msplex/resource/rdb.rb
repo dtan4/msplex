@@ -62,6 +62,7 @@ CONFIG
       def list(table)
         <<-LIST
 #{table.to_s} = #{activerecord_class(table)}.all
+result[:users] = users
 LIST
 
       end
@@ -70,6 +71,8 @@ LIST
         <<-CREATE
 #{table.to_s.singularize} = #{activerecord_class(table)}.new(#{prettify_params(table, params)})
 #{table.to_s.singularize}.save!
+result[:users] ||= []
+result[:users] << user
 CREATE
       end
 
@@ -77,6 +80,8 @@ CREATE
       def read(table, params)
         <<-READ
 #{table.to_s.singularize} = #{activerecord_class(table)}.where(#{prettify_params(table, params)})
+result[:users] ||= []
+result[:users] << user
 READ
       end
 
