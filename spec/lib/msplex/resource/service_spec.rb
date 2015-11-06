@@ -43,6 +43,10 @@ module Msplex
 class User < ActiveRecord::Base
 end
 DEFINITION
+            params: <<-PARAMS,
+user_name = params[:users][:name]
+user_description = params[:users][:description]
+PARAMS
             list: "User.all",
             create: "User.new(name: hoge)",
           )
@@ -93,6 +97,11 @@ class App < Sinatra::Base
   end
 
   post "/users" do
+    user_name = params[:users][:name]
+    user_description = params[:users][:description]
+
+    user = User.create(name: user_name)
+    user.save!
   end
 
   get "/users" do

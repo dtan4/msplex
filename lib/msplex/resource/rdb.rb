@@ -55,7 +55,7 @@ CONFIG
 
       def params(table)
         tables[table.to_sym].map do |field|
-          "#{table.to_s.singularize}_#{field[:key]} = params[:#{table}][:#{field[:key]}]"
+          "#{param_name_of(table, field[:key])} = params[:#{table}][:#{field[:key]}]"
         end.join("\n") << "\n"
       end
 
@@ -63,12 +63,12 @@ CONFIG
         "#{activerecord_class(table)}.all"
       end
 
-      def create(table, conditions)
-        "#{activerecord_class(table)}.new(#{prettify_conditions(conditions)})"
+      def create(table, params)
+        "#{activerecord_class(table)}.new(#{prettify_params(table, params)})"
       end
 
-      def read(table, conditions)
-        "#{activerecord_class(table)}.where(#{prettify_conditions(conditions)})"
+      def read(table, params)
+        "#{activerecord_class(table)}.where(#{prettify_params(table, params)})"
       end
 
       private
@@ -108,8 +108,12 @@ DEFINITION
         "create_#{table}"
       end
 
-      def prettify_conditions(conditions)
-        conditions.map { |key, value| "#{key}: #{value.inspect}" }.join(", ")
+      def param_name_of(table, param)
+        "#{table.to_s.singularize}_#{param}"
+      end
+
+      def prettify_params(table, params)
+        params.map { |param| "#{param}: #{param_name_of(table, param)}" }.join(", ")
       end
 
       def table_migration(table, fields)

@@ -174,13 +174,13 @@ PARAMS
           :users
         end
 
-        let(:conditions) do
-          { id: 1, name: "hoge" }
+        let(:params) do
+          [:name]
         end
 
-        subject { rdb.create(table, conditions) }
+        subject { rdb.create(table, params) }
 
-        it { is_expected.to eq 'User.new(id: 1, name: "hoge")' }
+        it { is_expected.to eq 'User.new(name: user_name)' }
       end
 
       describe "#read" do
@@ -188,13 +188,13 @@ PARAMS
           :users
         end
 
-        let(:conditions) do
-          { id: 1, name: "hoge" }
+        let(:params) do
+          [:id, :name]
         end
 
-        subject { rdb.read(table, conditions) }
+        subject { rdb.read(table, params) }
 
-        it { is_expected.to eq 'User.where(id: 1, name: "hoge")' }
+        it { is_expected.to eq 'User.where(id: user_id, name: user_name)' }
       end
     end
   end
