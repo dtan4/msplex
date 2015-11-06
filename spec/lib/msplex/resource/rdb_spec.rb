@@ -181,7 +181,12 @@ PARAMS
 
         subject { rdb.create(table, params) }
 
-        it { is_expected.to eq 'User.new(name: user_name)' }
+        it "should generate code for creating new user" do
+          expect(subject).to eq <<-CREATE
+user = User.new(name: user_name)
+user.save!
+CREATE
+        end
       end
 
       describe "#read" do

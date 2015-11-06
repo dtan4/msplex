@@ -64,8 +64,12 @@ CONFIG
       end
 
       def create(table, params)
-        "#{activerecord_class(table)}.new(#{prettify_params(table, params)})"
+        <<-CREATE
+#{table.to_s.singularize} = #{activerecord_class(table)}.new(#{prettify_params(table, params)})
+#{table.to_s.singularize}.save!
+CREATE
       end
+
 
       def read(table, params)
         "#{activerecord_class(table)}.where(#{prettify_params(table, params)})"
