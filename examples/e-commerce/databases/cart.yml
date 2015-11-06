@@ -1,7 +1,7 @@
-database:
-  name: cart
-  type: rdb
-  fields:
+name: cartdb
+type: rdb
+tables:
+  carts:
     - key: user_id
       type: integer
     - key: item_id

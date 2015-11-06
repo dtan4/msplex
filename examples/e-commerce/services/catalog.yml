@@ -1,4 +1,3 @@
-service:
-  name: catalog
-  actions:
-    - type: list
+name: catalogservice
+actions:
+  - type: list

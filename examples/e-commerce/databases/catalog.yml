@@ -1,7 +1,7 @@
-database:
-  name: catalog
-  type: rdb
-  fields:
+name: catalogdb
+type: rdb
+tables:
+  items:
     - key: name
       type: string
     - key: descripton

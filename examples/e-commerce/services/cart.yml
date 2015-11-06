@@ -1,5 +1,4 @@
-service:
-  name: cart
-  actions:
-    - type: create
-    - type: delete
+name: cartservice
+actions:
+  - type: create
+  - type: delete
