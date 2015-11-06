@@ -200,7 +200,7 @@ CREATE
 
         subject { rdb.read(table, params) }
 
-        it { is_expected.to eq 'User.where(id: user_id, name: user_name)' }
+        it { is_expected.to eq 'user = User.where(id: user_id, name: user_name)' }
       end
     end
   end

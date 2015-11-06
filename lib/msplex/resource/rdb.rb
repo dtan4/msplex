@@ -72,7 +72,7 @@ CREATE
 
 
       def read(table, params)
-        "#{activerecord_class(table)}.where(#{prettify_params(table, params)})"
+        "#{table.to_s.singularize} = #{activerecord_class(table)}.where(#{prettify_params(table, params)})"
       end
 
       private
