@@ -60,7 +60,10 @@ CONFIG
       end
 
       def list(table)
-        "#{activerecord_class(table)}.all"
+        <<-LIST
+#{table.to_s} = #{activerecord_class(table)}.all
+LIST
+
       end
 
       def create(table, params)
@@ -72,7 +75,9 @@ CREATE
 
 
       def read(table, params)
-        "#{table.to_s.singularize} = #{activerecord_class(table)}.where(#{prettify_params(table, params)})"
+        <<-READ
+#{table.to_s.singularize} = #{activerecord_class(table)}.where(#{prettify_params(table, params)})
+READ
       end
 
       private

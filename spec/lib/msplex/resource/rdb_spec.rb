@@ -167,7 +167,11 @@ PARAMS
 
         subject { rdb.list(table) }
 
-        it { is_expected.to eq 'User.all' }
+        it "should generate code for listing user" do
+          expect(subject).to eq <<-LIST
+users = User.all
+LIST
+        end
       end
 
       describe "#create" do
@@ -200,7 +204,11 @@ CREATE
 
         subject { rdb.read(table, params) }
 
-        it { is_expected.to eq 'user = User.where(id: user_id, name: user_name)' }
+        it "should generate code for reading user" do
+          expect(subject).to eq <<-READ
+user = User.where(id: user_id, name: user_name)
+READ
+        end
       end
     end
   end
