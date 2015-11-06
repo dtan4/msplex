@@ -125,9 +125,6 @@ APPRB
               links: [
                 "sampleservice-db:db",
               ],
-              environment: [
-                "DB_HOST=db",
-              ]
             })
           end
         end
@@ -141,7 +138,6 @@ APPRB
             expect(subject).to eql({
               image: "ruby:2.2.3",
               links: [],
-              environment: [],
             })
           end
         end

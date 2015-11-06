@@ -25,7 +25,6 @@ module Msplex
         {
           image: image,
           links: links(database),
-          environment: environment(database),
         }
       end
 
@@ -145,10 +144,6 @@ ENDPOINT
             ""
           end
         end.join("\n")
-      end
-
-      def environment(database)
-        database ? ["DB_HOST=db"] : []
       end
 
       def links(database)
