@@ -64,7 +64,6 @@ CONFIG
 #{table.to_s} = #{activerecord_class(table)}.all
 result[:users] = users
 LIST
-
       end
 
       def create(table, params)
