@@ -102,8 +102,19 @@ PARAMS
         end
       end
 
-      describe "#all" do
-        pending
+      describe "#list" do
+        let(:table) do
+          :users
+        end
+
+        subject { kvs.list(table) }
+
+        it "should generate code for listing user" do
+          expect(subject).to eq <<-LIST
+users = User.all.to_a
+result[:users] = users
+LIST
+        end
       end
 
       describe "#create" do

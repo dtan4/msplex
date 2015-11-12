@@ -40,8 +40,11 @@ module Msplex
         end.join("\n") << "\n"
       end
 
-      def all
-
+      def list(table)
+        <<-LIST
+#{table.to_s} = #{ohm_class(table)}.all.to_a
+result[:users] = users
+LIST
       end
 
       def create
