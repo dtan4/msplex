@@ -118,7 +118,23 @@ LIST
       end
 
       describe "#create" do
-        pending
+        let(:table) do
+          :users
+        end
+
+        let(:params) do
+          [:name]
+        end
+
+        subject { kvs.create(table, params) }
+
+        it "should generate code for creating new user" do
+          expect(subject).to eq <<-CREATE
+user = User.create(name: user_name)
+result[:users] ||= []
+result[:users] << user
+CREATE
+        end
       end
 
       describe "#read" do

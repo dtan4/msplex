@@ -47,8 +47,12 @@ result[:users] = users
 LIST
       end
 
-      def create
-
+      def create(table, params)
+        <<-CREATE
+#{table.to_s.singularize} = #{ohm_class(table)}.create(#{prettify_params(table, params)})
+result[:users] ||= []
+result[:users] << user
+CREATE
       end
 
       def read
@@ -71,6 +75,14 @@ class #{ohm_class(table)} < Ohm::Model
 #{Utils.indent(ohm_attributes(fields), 2)}
 end
 DEFINITION
+      end
+
+      def param_name_of(table, param)
+        "#{table.to_s.singularize}_#{param}"
+      end
+
+      def prettify_params(table, params)
+        params.map { |param| "#{param}: #{param_name_of(table, param)}" }.join(", ")
       end
     end
   end
