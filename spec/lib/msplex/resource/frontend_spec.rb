@@ -8,12 +8,15 @@ module Msplex
           {
             name: "index",
             # FIXME
-            elements: <<-ELEMENTS
+            elements: <<-ELEMENTS,
 div#root
   ul
   - @catalog_item_list.each do |obj|
     li obj.name
 ELEMENTS
+            variables: {
+              users: { service: "user", table: "users", action: "list" },
+            }
           }
         ]
       end
@@ -82,6 +85,7 @@ class App < Sinatra::Base
   end
 
   get "/index" do
+    @users = http_get(endpoint_of("user", "users/list"))
     slim :index
   end
 end

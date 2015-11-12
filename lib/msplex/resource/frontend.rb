@@ -144,6 +144,7 @@ HTML
         @pages.map do |page|
           <<-ENDPOINT
 get "/#{page[:name]}" do
+#{Utils.indent(variables_assignment(page), 2)}
   slim :#{page[:name]}
 end
 ENDPOINT
@@ -152,6 +153,14 @@ ENDPOINT
 
       def links(services)
         services.map { |service| "#{service.name}:#{service.name}" }
+      end
+
+      def variables_assignment(page)
+        page[:variables].map do |name, value|
+          <<-ASSIGNMENT
+@#{name} = http_get(endpoint_of("#{value[:service]}", "#{value[:table]}/#{value[:action]}"))
+ASSIGNMENT
+        end.join("\n")
       end
     end
   end
