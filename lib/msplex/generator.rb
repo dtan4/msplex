@@ -33,6 +33,7 @@ module Msplex
         service_dir = File.join(@out_dir, "services", service.name)
         FileUtils.mkdir_p(service_dir)
 
+        generate_app_rb(service, service_dir)
         generate_config_ru(service, service_dir)
         generate_database_yml(database, service_dir)
         generate_dockerfile(service, service_dir)
