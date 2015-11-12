@@ -85,8 +85,7 @@ class App < Sinatra::Base
   end
 
   get "/index" do
-    @users = http_get(endpoint_of("user", "users/list"))
-    slim :index
+    slim :index, locals: { users: http_get(endpoint_of("user", "users/list")) }
   end
 end
 APPRB
