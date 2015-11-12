@@ -23,7 +23,7 @@ module Msplex
       end
 
       def gem
-        { gem: "redis", version: "3.2.1" }
+        { gem: "ohm", version: "2.3.0" }
       end
 
       def image

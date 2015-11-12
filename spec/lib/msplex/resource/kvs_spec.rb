@@ -55,8 +55,8 @@ module Msplex
 
         it "should return adapter gem adn its version" do
           expect(subject).to eql({
-            gem: "redis",
-            version: "3.2.1",
+            gem: "ohm",
+            version: "2.3.0",
           })
         end
       end
