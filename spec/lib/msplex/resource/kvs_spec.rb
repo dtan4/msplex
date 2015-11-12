@@ -47,7 +47,21 @@ module Msplex
       describe "#definitions" do
         subject { kvs.definitions }
 
-        it { is_expected.to eq "" }
+        it "should generate class defitions of ActiveRecord" do
+          expect(subject).to eql([
+                <<-DEFINITIONS,
+class User < Ohm::Model
+  attribute :name
+  attribute :description
+end
+DEFINITIONS
+                <<-DEFINITIONS,
+class Item < Ohm::Model
+  attribute :name
+end
+DEFINITIONS
+          ])
+        end
       end
 
       describe "#gem" do

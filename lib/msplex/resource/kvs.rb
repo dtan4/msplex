@@ -19,7 +19,7 @@ module Msplex
       end
 
       def definitions
-        ""
+        tables.map { |table, fields| ohm_definition(table, fields) }
       end
 
       def gem
@@ -50,6 +50,24 @@ module Msplex
 
       def read
 
+      end
+
+      private
+
+      def ohm_attributes(fields)
+        fields.map { |field| "attribute :#{field[:key]}" }.join("\n")
+      end
+
+      def ohm_class(table)
+        table.to_s.singularize.capitalize
+      end
+
+      def ohm_definition(table, fields)
+        <<-DEFINITION
+class #{ohm_class(table)} < Ohm::Model
+#{Utils.indent(ohm_attributes(fields), 2)}
+end
+DEFINITION
       end
     end
   end
