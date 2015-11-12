@@ -140,10 +140,14 @@ HTML
         elements
       end
 
+      def endpoint_of(page)
+        page[:name] == "index" ? "/" : "/#{page[:name]}"
+      end
+
       def endpoints
         @pages.map do |page|
           <<-ENDPOINT
-get "/#{page[:name]}" do
+get "#{endpoint_of(page)}" do
   slim :#{page[:name]}, locals: { #{variable_assignments(page)} }
 end
 ENDPOINT

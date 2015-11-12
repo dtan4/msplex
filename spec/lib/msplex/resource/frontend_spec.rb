@@ -17,6 +17,15 @@ ELEMENTS
             variables: {
               users: { service: "user", table: "users", action: "list" },
             }
+          },
+          {
+            name: "search",
+            # FIXME
+            elements: <<-ELEMENTS,
+div#root
+  input#searchKeyword type: text
+ELEMENTS
+            variables: {},
           }
         ]
       end
@@ -84,8 +93,12 @@ class App < Sinatra::Base
     end
   end
 
-  get "/index" do
+  get "/" do
     slim :index, locals: { users: http_get(endpoint_of("user", "users/list")) }
+  end
+
+  get "/search" do
+    slim :search, locals: {  }
   end
 end
 APPRB
@@ -228,6 +241,13 @@ div#root
   ul
   - @catalog_item_list.each do |obj|
     li obj.name
+HTML
+            },
+            {
+              name: "search",
+              html: <<-HTML
+div#root
+  input#searchKeyword type: text
 HTML
             }
           ])
