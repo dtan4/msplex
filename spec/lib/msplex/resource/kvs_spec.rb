@@ -53,11 +53,16 @@ module Msplex
 class User < Ohm::Model
   attribute :name
   attribute :description
+
+  index :name
+  index :description
 end
 DEFINITIONS
                 <<-DEFINITIONS,
 class Item < Ohm::Model
   attribute :name
+
+  index :name
 end
 DEFINITIONS
           ])

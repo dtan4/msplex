@@ -62,7 +62,15 @@ CREATE
       private
 
       def ohm_attributes(fields)
-        fields.map { |field| "attribute :#{field[:key]}" }.join("\n")
+        ohm_fields("attribute", fields)
+      end
+
+      def ohm_fields(type, fields)
+        fields.map { |field| "#{type} :#{field[:key]}" }.join("\n")
+      end
+
+      def ohm_indices(fields)
+        ohm_fields("index", fields)
       end
 
       def ohm_class(table)
@@ -73,6 +81,8 @@ CREATE
         <<-DEFINITION
 class #{ohm_class(table)} < Ohm::Model
 #{Utils.indent(ohm_attributes(fields), 2)}
+
+#{Utils.indent(ohm_indices(fields), 2)}
 end
 DEFINITION
       end
