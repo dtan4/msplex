@@ -55,8 +55,12 @@ result[:users] << user
 CREATE
       end
 
-      def read
-
+      def read(table, params)
+        <<-READ
+#{table.to_s.singularize} = #{ohm_class(table)}.find(#{prettify_params(table, params)}).to_a[0]
+result[:#{table}] ||= []
+result[:#{table}] << #{table.to_s.singularize}
+READ
       end
 
       private

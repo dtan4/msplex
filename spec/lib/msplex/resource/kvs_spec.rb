@@ -143,7 +143,23 @@ CREATE
       end
 
       describe "#read" do
-        pending
+        let(:table) do
+          :users
+        end
+
+        let(:params) do
+          [:id, :name]
+        end
+
+        subject { kvs.read(table, params) }
+
+        it "should generate code for reading user" do
+          expect(subject).to eq <<-READ
+user = User.find(id: user_id, name: user_name).to_a[0]
+result[:users] ||= []
+result[:users] << user
+READ
+        end
       end
     end
   end
