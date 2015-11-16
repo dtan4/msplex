@@ -43,23 +43,23 @@ module Msplex
       def list(table)
         <<-LIST
 #{table.to_s} = #{ohm_class(table)}.all.to_a
-result[:users] = users
+result[:#{table.to_s}] = #{table.to_s}
 LIST
       end
 
       def create(table, params)
         <<-CREATE
 #{table.to_s.singularize} = #{ohm_class(table)}.create(#{prettify_params(table, params)})
-result[:users] ||= []
-result[:users] << user
+result[:#{table.to_s}] ||= []
+result[:#{table.to_s}] << #{table.to_s.singularize}
 CREATE
       end
 
       def read(table, params)
         <<-READ
 #{table.to_s.singularize} = #{ohm_class(table)}.find(#{prettify_params(table, params)}).to_a[0]
-result[:#{table}] ||= []
-result[:#{table}] << #{table.to_s.singularize}
+result[:#{table.to_s}] ||= []
+result[:#{table.to_s}] << #{table.to_s.singularize}
 READ
       end
 
