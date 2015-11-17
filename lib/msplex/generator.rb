@@ -21,9 +21,9 @@ module Msplex
       frontend_dir = File.join(@out_dir, "frontend")
       FileUtils.mkdir_p(frontend_dir)
 
-      generate_app_rb(@frontend, frontend_dir)
       generate_config_ru(@frontend, frontend_dir)
       generate_dockerfile(@frontend, frontend_dir)
+      generate_frontend_app_rb(frontend_dir)
       generate_frontend_gemfile(frontend_dir)
       generate_frontend_views(frontend_dir)
     end
@@ -33,20 +33,16 @@ module Msplex
         service_dir = File.join(@out_dir, "services", service.name)
         FileUtils.mkdir_p(service_dir)
 
-        generate_app_rb(service, service_dir)
         generate_config_ru(service, service_dir)
         generate_database_yml(database, service_dir)
         generate_dockerfile(service, service_dir)
+        generate_service_app_rb(service, database, service_dir)
         generate_service_gemfile(service, database, service_dir)
         generate_migration_files(database, service_dir)
       end
     end
 
     private
-
-    def generate_app_rb(resource, base_dir)
-      File.open(File.join(base_dir, "app.rb"), "w+") { |f| f.puts resource.app_rb }
-    end
 
     def generate_config_ru(resource, base_dir)
       File.open(File.join(base_dir, "config.ru"), "w+") { |f| f.puts resource.config_ru }
@@ -61,6 +57,10 @@ module Msplex
       File.open(File.join(base_dir, "Dockerfile"), "w+") { |f| f.puts resource.dockerfile }
     end
 
+    def generate_frontend_app_rb(base_dir)
+      File.open(File.join(base_dir, "app.rb"), "w+") { |f| f.puts @frontend.app_rb }
+    end
+
     def generate_frontend_gemfile(base_dir)
       File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts @frontend.gemfile }
     end
@@ -69,6 +69,10 @@ module Msplex
       FileUtils.mkdir(File.join(base_dir, "views"))
       generate_layout_slim(@frontend, base_dir)
       generate_page_slims(@frontend, base_dir)
+    end
+
+    def generate_service_app_rb(service, database, base_dir)
+      File.open(File.join(base_dir, "app.rb"), "w+") { |f| f.puts service.app_rb(database) }
     end
 
     def generate_service_gemfile(service, database, base_dir)
