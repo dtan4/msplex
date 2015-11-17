@@ -16,6 +16,7 @@ module Msplex
     def generate
       application, frontend, services, databases = Msplex.read_schema_directory(options[:schema_dir])
       generator = Msplex::Generator.new(application, frontend, services, databases, options[:out_dir])
+      FileUtils.mkdir_p(options[:out_dir])
 
       generator.generate_compose
       generator.generate_frontend
