@@ -25,7 +25,6 @@ ELEMENTS
 div#root
   input#searchKeyword type: text
 ELEMENTS
-            variables: {},
           }
         ]
       end

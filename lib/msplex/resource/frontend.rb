@@ -158,6 +158,8 @@ ENDPOINT
       end
 
       def variable_assignments(page)
+        return "" unless page[:variables]
+
         page[:variables].map do |name, value|
           <<-ASSIGNMENT.strip
 #{name}: http_get(endpoint_of("#{value[:service]}", "#{value[:table]}/#{value[:action]}"))
