@@ -2,11 +2,26 @@ module Msplex
   module Resource
     class Service
       DEFINED_ACTION = {
-        list: { type: :get },
-        create: { type: :post },
-        get: { type: :get },
-        update: { type: :post }, # PATCH
-        delete: { type: :post }, # DELETE
+        list: {
+          type: :get,
+          params: false,
+        },
+        create: {
+          type: :post,
+          params: true,
+        },
+        get: {
+          type: :get,
+          params: true,
+        },
+        update: {
+          type: :post, # PATCH
+          params: true,
+        },
+        delete: {
+          type: :post, # DELETE
+          params: true,
+        },
       }
 
       attr_reader :name, :actions
@@ -134,13 +149,15 @@ GEMFILE
         actions.map do |action|
           if DEFINED_ACTION.keys.include?(action[:type].to_sym)
             defined = DEFINED_ACTION[action[:type].to_sym]
+            db_action = defined[:params] ?
+              database.send(action[:type], action[:table], {}) : database.send(action[:type], action[:table])
             <<-ENDPOINT
 #{defined[:type]} "/#{action[:table]}" do
   content_type :json
   result = {}
 
-#{Utils.indent(database.params, 2)}
-#{Utils.indent(database.send(action[:type]), 2)}
+#{Utils.indent(database.params(action[:table]), 2)}
+#{Utils.indent(db_action, 2)}
 
   result.to_json
 end
