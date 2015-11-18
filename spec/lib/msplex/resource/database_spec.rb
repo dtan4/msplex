@@ -144,11 +144,11 @@ module Msplex
         end
       end
 
-      describe "#all" do
-        subject { database.all }
+      describe "#list" do
+        subject { database.list }
 
         it "should delegate to child class" do
-          expect_any_instance_of(Msplex::Resource::RDB).to receive(:all)
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:list)
           subject
         end
       end
