@@ -1,3 +1,4 @@
 name: catalogservice
 actions:
   - type: list
+    table: items

@@ -1,4 +1,6 @@
 name: cartservice
 actions:
   - type: create
-  - type: delete
+    table: carts
+  # - type: delete
+  #   table: carts
