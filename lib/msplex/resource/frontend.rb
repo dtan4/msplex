@@ -123,8 +123,11 @@ html
     == csrf_meta_tag
     title
       | #{ERB::Util.html_escape(application.name)}
+    link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+    script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
   body
-    == yield
+    .container
+      == yield
 HTML
       end
 
