@@ -126,6 +126,13 @@ html
     link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
     script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
   body
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand href="/" #{ERB::Util.html_escape(application.name)}
+        .collapse.navbar-collapse#bs-navbar-collapse-1
+          ul.nav.navbar-nav
+#{Utils.indent(navbar_items, 12)}
     .container
       == yield
 HTML
@@ -158,6 +165,15 @@ ENDPOINT
 
       def links(services)
         services.map { |service| "#{service.name}:#{service.name}" }
+      end
+
+      def navbar_items
+        @pages.map do |page|
+          <<-ITEM.strip
+li
+  a href="#{endpoint_of(page)}" #{page[:name].capitalize}
+ITEM
+        end.join("\n")
       end
 
       def variable_assignments(page)
