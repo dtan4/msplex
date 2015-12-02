@@ -102,7 +102,6 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "slim"
-gem "sinatra-websocket"
 gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
 gem "rake"
