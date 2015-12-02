@@ -218,7 +218,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
             expect(subject).to eq <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
@@ -238,7 +238,7 @@ GEMFILE
             expect(subject).to eq <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"

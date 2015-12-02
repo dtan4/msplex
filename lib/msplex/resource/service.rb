@@ -123,7 +123,7 @@ DOCKERFILE
         <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
