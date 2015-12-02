@@ -4,7 +4,7 @@ module Msplex
   module Resource
     describe KVS do
       let(:name) do
-        "sampledb"
+        "sample"
       end
 
       let(:tables) do
@@ -36,6 +36,12 @@ module Msplex
             image: "redis:3.0",
           })
         end
+      end
+
+      describe "#compose_service_name" do
+        subject { kvs.compose_service_name }
+
+        it { is_expected.to eq "sample_db" }
       end
 
       describe "#config" do
