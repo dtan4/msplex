@@ -25,6 +25,7 @@ module Msplex
       generate_dockerfile(@frontend, frontend_dir)
       generate_frontend_app_rb(frontend_dir)
       generate_frontend_gemfile(frontend_dir)
+      generate_frontend_gemfile_lock(frontend_dir)
       generate_frontend_views(frontend_dir)
     end
 
@@ -63,6 +64,10 @@ module Msplex
 
     def generate_frontend_gemfile(base_dir)
       File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts @frontend.gemfile }
+    end
+
+    def generate_frontend_gemfile_lock(base_dir)
+      File.open(File.join(base_dir, "Gemfile.lock"), "w+") { |f| f.puts @frontend.gemfile_lock }
     end
 
     def generate_frontend_views(base_dir)
