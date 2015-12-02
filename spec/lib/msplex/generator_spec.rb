@@ -589,7 +589,7 @@ MIGRATION
 
       it "should generate migration file" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "db", "001_create_users.rb")).read).to match(/class CreateUsers/)
+        expect(open(File.join(out_dir, "services", "hogeservice", "db", "migrate", "001_create_users.rb")).read).to match(/class CreateUsers/)
       end
     end
   end

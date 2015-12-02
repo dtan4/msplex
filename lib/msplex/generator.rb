@@ -96,11 +96,11 @@ module Msplex
 
     def generate_migration_file(migration, index, base_dir)
       filename = "#{sprintf('%03d', index + 1)}_#{migration[:name]}.rb"
-      open(File.join(base_dir, "db", filename), "w+") { |f| f.puts migration[:migration] }
+      open(File.join(base_dir, "db", "migrate", filename), "w+") { |f| f.puts migration[:migration] }
     end
 
     def generate_migration_files(database, base_dir)
-      FileUtils.mkdir(File.join(base_dir, "db"))
+      FileUtils.mkdir_p(File.join(base_dir, "db", "migrate"))
       database.migrations.each.with_index { |migration, index| generate_migration_file(migration, index, base_dir) }
     end
 
