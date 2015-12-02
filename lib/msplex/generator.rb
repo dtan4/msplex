@@ -40,6 +40,7 @@ module Msplex
         generate_service_app_rb(service, database, service_dir)
         generate_service_gemfile(service, database, service_dir)
         generate_service_gemfile_lock(service, database, service_dir)
+        generate_rakefile(service, service_dir)
         generate_migration_files(database, service_dir)
       end
     end
@@ -105,6 +106,10 @@ module Msplex
 
     def generate_page_slims(frontend, base_dir)
       frontend.page_htmls.each { |page| File.open(File.join(base_dir, "views", "#{page[:name]}.slim"), "w+") { |f| f.puts page[:html] } }
+    end
+
+    def generate_rakefile(resource, base_dir)
+      File.open(File.join(base_dir, "Rakefile"), "w+") { |f| f.puts resource.rakefile }
     end
 
     def service_database_pairs
