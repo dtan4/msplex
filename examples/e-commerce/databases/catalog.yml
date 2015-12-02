@@ -1,4 +1,4 @@
-name: catalogdb
+name: catalog
 type: rdb
 tables:
   items:

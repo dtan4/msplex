@@ -108,8 +108,8 @@ APPRB
         context "when the frontend has services" do
           let(:services) do
             [
-              double(:hoge_service, name: "hoge"),
-              double(:fuga_service, name: "fuga"),
+              double(:hoge, name: "hoge", compose_service_name: "hoge_service"),
+              double(:fuga, name: "fuga", compose_service_name: "fuga_service"),
             ]
           end
 
@@ -117,8 +117,8 @@ APPRB
             expect(subject).to eql({
               build: "frontend",
               links: [
-                "hoge:hoge",
-                "fuga:fuga",
+                "hoge_service:hoge",
+                "fuga_service:fuga",
               ],
               ports: [
                 "80:9292"

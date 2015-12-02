@@ -1,4 +1,4 @@
-name: sampledb
+name: sample
 type: rdb
 tables:
   users:

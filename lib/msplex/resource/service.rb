@@ -43,6 +43,10 @@ module Msplex
         }
       end
 
+      def compose_service_name
+        @compose_service_name ||= "#{@name}_service"
+      end
+
       def app_rb(database)
         <<-APPRB
 #{database.definitions.join("\n")}
@@ -239,7 +243,7 @@ ENDPOINT
       end
 
       def links(database)
-        database ? ["#{database.name}:db"] : []
+        database ? ["#{database.compose_service_name}:db"] : []
       end
     end
   end

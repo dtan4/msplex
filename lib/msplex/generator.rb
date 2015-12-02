@@ -12,8 +12,8 @@ module Msplex
 
     def generate_compose
       compose_yml = { frontend: @frontend.compose(@services) }
-      service_database_pairs.each { |service, database| compose_yml[service.name] = service.compose(database) }
-      @databases.each { |database| compose_yml[database.name] = database.compose }
+      service_database_pairs.each { |service, database| compose_yml[service.compose_service_name] = service.compose(database) }
+      @databases.each { |database| compose_yml[database.compose_service_name] = database.compose }
       write_compose(compose_yml)
     end
 
@@ -114,8 +114,7 @@ module Msplex
 
     def service_database_pairs
       @service_database_pairs ||= @application.links.map do |link|
-        service, database = *link.split(":")
-        [@services.find { |s| s.name == service }, @databases.find { |d| d.name == database }]
+        [@services.find { |s| s.name == link[:service] }, @databases.find { |d| d.name == link[:database] }]
       end
     end
 

@@ -4,7 +4,7 @@ module Msplex
   module Resource
     describe RDB do
       let(:name) do
-        "sampledb"
+        "sample"
       end
 
       let(:tables) do
@@ -39,6 +39,12 @@ module Msplex
         end
       end
 
+      describe "#compose_service_name" do
+        subject { rdb.compose_service_name }
+
+        it { is_expected.to eq "sample_db" }
+      end
+
       describe "#config" do
         subject { rdb.config }
 
@@ -54,15 +60,15 @@ default: &default
 
 development:
   <<: *default
-  database: sampledb_development
+  database: sample_development
 
 test:
   <<: *default
-  database: sampledb_test
+  database: sample_test
 
 production:
   <<: *default
-  database: sampledb_production
+  database: sample_production
 CONFIG
         end
       end

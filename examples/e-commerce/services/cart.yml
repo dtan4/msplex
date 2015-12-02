@@ -1,4 +1,4 @@
-name: cartservice
+name: cart
 actions:
   - type: create
     table: carts

@@ -41,9 +41,9 @@ module Msplex
           name: "sample",
           maintainer: "Tanaka Taro",
           links: [
-            "hogeservice:hogedb",
-            "fugaservice:fugadb",
-          ]
+            { service: "hoge", database: "hoge" },
+            { service: "fuga", database: "fuga" },
+           ]
         )
       end
 
@@ -52,8 +52,8 @@ module Msplex
           compose: {
             image: "ruby:2.2.3",
             links: [
-              "hoge:hoge",
-              "fuga:fuga",
+              "hoge_service:hoge",
+              "fuga_service:fuga",
             ]
           }
         )
@@ -62,28 +62,30 @@ module Msplex
       let(:services) do
         [
           double(:service,
-            name: "hogeservice",
+            name: "hoge",
             compose: {
               image: "ruby:2.2.3",
               links: [
-                "hogedb:db",
+                "hoge_db:db",
               ],
               environment: [
                 "RACK_ENV=production",
               ]
-            }
+            },
+            compose_service_name: "hoge_service",
           ),
           double(:service,
-            name: "fugaservice",
+            name: "fuga",
             compose: {
               image: "ruby:2.2.3",
               links: [
-                "fugadb:db",
+                "fuga_db:db",
               ],
               environment: [
                 "RACK_ENV=production",
               ]
-            }
+            },
+            compose_service_name: "fuga_service",
           )
         ]
       end
@@ -91,16 +93,18 @@ module Msplex
       let(:databases) do
         [
           double(:database,
-            name: "hogedb",
+            name: "hoge",
             compose: {
               image: "postgres:9.4",
-            }
+            },
+            compose_service_name: "hoge_db",
           ),
           double(:database,
-            name: "fugadb",
+            name: "fuga",
             compose: {
               image: "postgres:9.4",
-            }
+            },
+            compose_service_name: "fuga_db",
           )
         ]
       end
@@ -118,23 +122,23 @@ module Msplex
 frontend:
   image: ruby:2.2.3
   links:
-  - hoge:hoge
-  - fuga:fuga
-hogeservice:
+  - hoge_service:hoge
+  - fuga_service:fuga
+hoge_service:
   image: ruby:2.2.3
   links:
-  - hogedb:db
+  - hoge_db:db
   environment:
   - RACK_ENV=production
-fugaservice:
+fuga_service:
   image: ruby:2.2.3
   links:
-  - fugadb:db
+  - fuga_db:db
   environment:
   - RACK_ENV=production
-hogedb:
+hoge_db:
   image: postgres:9.4
-fugadb:
+fuga_db:
   image: postgres:9.4
 COMPOSE
       end
@@ -341,7 +345,7 @@ HTML
           name: "sample",
           maintainer: "Tanaka Taro",
           links: [
-            "hogeservice:hogedb",
+            { service: "hoge", database: "hoge" }
           ]
         )
       end
@@ -349,7 +353,7 @@ HTML
       let(:services) do
         [
           double(:service,
-            name: "hogeservice",
+            name: "hoge",
             app_rb: <<-APPRB,
 class App < Sinatra::Base
   configure do
@@ -500,7 +504,7 @@ RAKEFILE
       let(:databases) do
         [
           double(:database,
-            name: "hogedb",
+            name: "hoge",
             compose: {
               image: "postgres:9.4",
             },
@@ -515,14 +519,14 @@ default: &default
 
 development:
   <<: *default
-  database: sampledb_development
+  database: sample_development
 
 test:
   <<: *default
-  database: sampledb_test
+  database: sample_test
 
 production:
-  database: sampledb_production
+  database: sample_production
 CONFIG
             migrations: [
               name: "create_users",
@@ -549,47 +553,47 @@ MIGRATION
 
       it "should create service directories" do
         subject
-        expect(Dir.exists?(File.join(out_dir, "services", "hogeservice"))).to be true
+        expect(Dir.exists?(File.join(out_dir, "services", "hoge"))).to be true
       end
 
       it "should generate app.rb" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "app.rb")).read).to match(/class App < Sinatra::Base/)
+        expect(open(File.join(out_dir, "services", "hoge", "app.rb")).read).to match(/class App < Sinatra::Base/)
       end
 
       it "should generate config.ru" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "config.ru")).read).to match(/require "rubygems"/)
+        expect(open(File.join(out_dir, "services", "hoge", "config.ru")).read).to match(/require "rubygems"/)
       end
 
       it "should generate Dockerfile" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
+        expect(open(File.join(out_dir, "services", "hoge", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
       end
 
       it "should generate Gemfile" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile")).read).to match(/gem "sinatra"/)
+        expect(open(File.join(out_dir, "services", "hoge", "Gemfile")).read).to match(/gem "sinatra"/)
       end
 
       it "should generate Gemfile.lock" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile.lock")).read).to match(/sinatra \(1\.4\.6\)/)
+        expect(open(File.join(out_dir, "services", "hoge", "Gemfile.lock")).read).to match(/sinatra \(1\.4\.6\)/)
       end
 
       it "should generate Rakefile" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "Rakefile")).read).to match(/require "sinatra\/activerecord\/rake"/)
+        expect(open(File.join(out_dir, "services", "hoge", "Rakefile")).read).to match(/require "sinatra\/activerecord\/rake"/)
       end
 
       it "should generate config/database.yml" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "config", "database.yml")).read).to match(/default: &default/)
+        expect(open(File.join(out_dir, "services", "hoge", "config", "database.yml")).read).to match(/default: &default/)
       end
 
       it "should generate migration file" do
         subject
-        expect(open(File.join(out_dir, "services", "hogeservice", "db", "migrate", "001_create_users.rb")).read).to match(/class CreateUsers/)
+        expect(open(File.join(out_dir, "services", "hoge", "db", "migrate", "001_create_users.rb")).read).to match(/class CreateUsers/)
       end
     end
   end

@@ -14,6 +14,10 @@ module Msplex
         }
       end
 
+      def compose_service_name
+        @compose_service_name ||= "#{@name}_db"
+      end
+
       def config
         ""
       end

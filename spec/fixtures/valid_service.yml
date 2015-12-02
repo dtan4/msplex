@@ -1,4 +1,4 @@
-name: sampleservice
+name: sample
 actions:
   - type: get
   - type: list

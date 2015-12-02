@@ -4,7 +4,7 @@ module Msplex
   module Resource
     describe Service do
       let(:name) do
-        "sampleservice"
+        "sample"
       end
 
       let(:actions) do
@@ -27,7 +27,7 @@ module Msplex
           end
 
           it { is_expected.to be_a described_class }
-          its(:name) { is_expected.to eq "sampleservice" }
+          its(:name) { is_expected.to eq "sample" }
           its(:actions) { is_expected.to eql [{ type: "get" }, { type: "list" }] }
         end
 
@@ -136,14 +136,14 @@ APPRB
 
         context "when the service has database" do
           let(:database) do
-            double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
+            double(:database, name: "sample", compose_service_name: "sample_db", gem: { gem: "pg", version: "0.18.3" })
           end
 
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
-              build: "services/sampleservice",
+              build: "services/sample",
               links: [
-                "sampleservice-db:db",
+                "sample_db:db",
               ],
             })
           end
@@ -156,11 +156,17 @@ APPRB
 
           it "should generate docker-compose.yml" do
             expect(subject).to eql({
-              build: "services/sampleservice",
+              build: "services/sample",
               links: [],
             })
           end
         end
+      end
+
+      describe "#compose_service_name" do
+        subject { service.compose_service_name}
+
+        it { is_expected.to eq "sample_service" }
       end
 
       describe "#config_ru" do

@@ -8,7 +8,7 @@ module Msplex
       end
 
       let(:name) do
-        "sampledb"
+        "sample"
       end
 
       let(:tables) do
@@ -38,7 +38,7 @@ module Msplex
           end
 
           it { is_expected.to be_a described_class }
-          its(:name) { is_expected.to eq "sampledb" }
+          its(:name) { is_expected.to eq "sample" }
           its(:tables) { is_expected.to eql({ users: [{ key: "name", type: "string" }, { key: "description", type: "string" }] }) }
         end
 
