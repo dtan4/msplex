@@ -136,6 +136,9 @@ APPRB
             expect(subject).to eql({
               build: "frontend",
               links: [],
+              ports: [
+                "80:9292"
+              ],
             })
           end
         end
