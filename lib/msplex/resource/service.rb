@@ -243,7 +243,7 @@ ENDPOINT
       end
 
       def links(database)
-        database ? ["#{database.name}:db"] : []
+        database ? ["#{database.compose_service_name}:db"] : []
       end
     end
   end

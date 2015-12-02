@@ -136,14 +136,14 @@ APPRB
 
         context "when the service has database" do
           let(:database) do
-            double(:database, name: "sampleservice-db", gem: { gem: "pg", version: "0.18.3" })
+            double(:database, name: "sample", compose_service_name: "sample_db", gem: { gem: "pg", version: "0.18.3" })
           end
 
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
               build: "services/sample",
               links: [
-                "sampleservice-db:db",
+                "sample_db:db",
               ],
             })
           end
