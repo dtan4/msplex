@@ -101,6 +101,8 @@ CONFIGRU
 FROM #{image}
 MAINTAINER Your Name <you@example.com>
 
+ENV RACK_ENV production
+
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app

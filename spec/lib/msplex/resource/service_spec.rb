@@ -187,6 +187,8 @@ CONFIGRU
 FROM ruby:2.2.3
 MAINTAINER Your Name <you@example.com>
 
+ENV RACK_ENV production
+
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
