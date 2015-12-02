@@ -190,12 +190,64 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "slim"
-gem "sinatra-websocket"
 gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
 gem "rake"
 gem "json"
 GEMFILE
+        end
+      end
+
+      describe "#gemfile_lock" do
+        subject { frontend.gemfile_lock }
+
+        it "should generate Gemfile.lock" do
+          expect(subject).to eq <<-GEMFILE_LOCK
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.5)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.8.3)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rack_csrf (2.5.0)
+      rack (>= 1.1.0)
+    rake (10.4.2)
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    slim (3.0.6)
+      temple (~> 0.7.3)
+      tilt (>= 1.3.3, < 2.1)
+    temple (0.7.6)
+    thread_safe (0.3.5)
+    tilt (2.0.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  json
+  rack_csrf
+  rake
+  sinatra
+  slim
+
+BUNDLED WITH
+   1.10.6
+GEMFILE_LOCK
         end
       end
 

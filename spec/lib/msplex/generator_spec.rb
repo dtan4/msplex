@@ -213,8 +213,6 @@ DOCKERFILE
           gemfile: <<-GEMFILE,
 source "https://rubygems.org"
 
-source "https://rubygems.org"
-
 gem "sinatra"
 gem "slim"
 gem "sinatra-websocket"
@@ -223,6 +221,52 @@ gem "activesupport", require: "active_support/all"
 gem "rake"
 gem "json"
 GEMFILE
+          gemfile_lock: <<-GEMFILE_LOCK,
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.5)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.8.3)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rack_csrf (2.5.0)
+      rack (>= 1.1.0)
+    rake (10.4.2)
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    slim (3.0.6)
+      temple (~> 0.7.3)
+      tilt (>= 1.3.3, < 2.1)
+    temple (0.7.6)
+    thread_safe (0.3.5)
+    tilt (2.0.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activesupport
+  json
+  rack_csrf
+  rake
+  sinatra
+  slim
+
+BUNDLED WITH
+   1.10.6
+GEMFILE_LOCK
           layout_html: <<-HTML,
 doctype html
 html
@@ -273,6 +317,11 @@ HTML
       it "should generate Gemfile" do
         subject
         expect(open(File.join(out_dir, "frontend", "Gemfile")).read).to match(/gem "sinatra"/)
+      end
+
+      it "should generate Gemfile.lock" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "Gemfile.lock")).read).to match(/sinatra \(1\.4\.6\)/)
       end
 
       it "should generate views/index.slim" do
@@ -379,6 +428,60 @@ gem "rake"
 gem "json"
 gem "pg", "0.18.3"
 GEMFILE
+            gemfile_lock: <<-GEMFILE_LOCK,
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (4.2.5)
+      activesupport (= 4.2.5)
+      builder (~> 3.1)
+    activerecord (4.2.5)
+      activemodel (= 4.2.5)
+      activesupport (= 4.2.5)
+      arel (~> 6.0)
+    activesupport (4.2.5)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    arel (6.0.3)
+    builder (3.2.2)
+    i18n (0.7.0)
+    json (1.8.3)
+    minitest (5.8.3)
+    pg (0.18.3)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rake (10.4.2)
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    sinatra-activerecord (2.0.9)
+      activerecord (>= 3.2)
+      sinatra (~> 1.0)
+    thread_safe (0.3.5)
+    tilt (2.0.1)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord
+  activesupport
+  json
+  pg (= 0.18.3)
+  rake
+  sinatra
+  sinatra-activerecord
+
+BUNDLED WITH
+   1.10.6
+GEMFILE_LOCK
           )
         ]
       end
@@ -456,6 +559,11 @@ MIGRATION
       it "should generate Gemfile" do
         subject
         expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile")).read).to match(/gem "sinatra"/)
+      end
+
+      it "should generate Gemfile.lock" do
+        subject
+        expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile.lock")).read).to match(/sinatra \(1\.4\.6\)/)
       end
 
       it "should generate config/database.yml" do
