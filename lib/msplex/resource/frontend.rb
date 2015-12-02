@@ -58,6 +58,9 @@ APPRB
         {
           build: "frontend",
           links: links(services),
+          ports: [
+            "80:9292"
+          ]
         }
       end
 

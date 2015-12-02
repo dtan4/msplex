@@ -119,7 +119,10 @@ APPRB
               links: [
                 "hoge:hoge",
                 "fuga:fuga",
-              ]
+              ],
+              ports: [
+                "80:9292"
+              ],
             })
           end
         end
