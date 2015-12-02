@@ -39,6 +39,7 @@ module Msplex
         generate_dockerfile(service, service_dir)
         generate_service_app_rb(service, database, service_dir)
         generate_service_gemfile(service, database, service_dir)
+        generate_service_gemfile_lock(service, database, service_dir)
         generate_migration_files(database, service_dir)
       end
     end
@@ -82,6 +83,10 @@ module Msplex
 
     def generate_service_gemfile(service, database, base_dir)
       File.open(File.join(base_dir, "Gemfile"), "w+") { |f| f.puts service.gemfile(database) }
+    end
+
+    def generate_service_gemfile_lock(service, database, base_dir)
+      File.open(File.join(base_dir, "Gemfile.lock"), "w+") { |f| f.puts service.gemfile_lock(database) }
     end
 
     def generate_layout_slim(frontend, base_dir)
