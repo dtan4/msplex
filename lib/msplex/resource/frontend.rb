@@ -16,7 +16,6 @@ module Msplex
         <<-APPRB
 class App < Sinatra::Base
   configure do
-    register Sinatra::ActiveRecordExtension
     use Rack::Session::Cookie, expire_after: 3600, secret: "salt"
     use Rack::Csrf, raise: true
     Slim::Engine.default_options[:pretty] = true
@@ -78,6 +77,8 @@ CONFIGRU
 FROM #{image}
 MAINTAINER Your Name <you@example.com>
 
+ENV RACK_ENV production
+
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
@@ -92,6 +93,7 @@ ADD . /usr/src/app
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9292
+
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         DOCKERFILE
       end
@@ -100,7 +102,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "slim"
 gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"

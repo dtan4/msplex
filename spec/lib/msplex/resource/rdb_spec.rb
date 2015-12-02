@@ -61,6 +61,7 @@ test:
   database: sampledb_test
 
 production:
+  <<: *default
   database: sampledb_production
 CONFIG
         end

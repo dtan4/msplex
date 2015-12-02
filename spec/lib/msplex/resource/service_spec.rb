@@ -72,8 +72,6 @@ class App < Sinatra::Base
   configure do
     register Sinatra::ActiveRecordExtension
     use Rack::Session::Cookie, expire_after: 3600, secret: "salt"
-    use Rack::Csrf, raise: true
-    Slim::Engine.default_options[:pretty] = true
   end
 
   helpers do
@@ -189,6 +187,8 @@ CONFIGRU
 FROM ruby:2.2.3
 MAINTAINER Your Name <you@example.com>
 
+ENV RACK_ENV production
+
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
@@ -220,7 +220,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
             expect(subject).to eq <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
@@ -240,7 +240,7 @@ GEMFILE
             expect(subject).to eq <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "activesupport", require: "active_support/all"
 gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
