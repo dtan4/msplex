@@ -99,7 +99,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "slim"
 gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
