@@ -1,4 +1,4 @@
-name: cartdb
+name: cart
 type: rdb
 tables:
   carts:

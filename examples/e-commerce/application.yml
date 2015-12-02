@@ -1,5 +1,7 @@
 name: E-commerce
 maintainer: Tanaka taro
 links:
-  - "cartservice:cartdb"
-  - "catalogservice:catalogdb"
+  - service: cart
+    database: cart
+  - service: catalog
+    database: catalog
