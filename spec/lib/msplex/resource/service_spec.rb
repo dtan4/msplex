@@ -120,8 +120,7 @@ class App < Sinatra::Base
     content_type :json
     result = {}
 
-    user_name = params[:users][:name]
-    user_description = params[:users][:description]
+
     users = User.all
     result[:users] = users
 

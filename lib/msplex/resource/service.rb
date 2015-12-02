@@ -225,7 +225,7 @@ RAKEFILE
   content_type :json
   result = {}
 
-#{Utils.indent(database.params(action[:table]), 2)}
+#{defined[:params] ? Utils.indent(database.params(action[:table]), 2) : ""}
 #{Utils.indent(db_action, 2)}
 
   result.to_json
