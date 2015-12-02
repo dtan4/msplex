@@ -30,7 +30,7 @@ module Msplex
           it { is_expected.to be_a described_class }
           its(:name) { is_expected.to eq "sample" }
           its(:maintainer) { is_expected.to eq "Tanaka Taro" }
-          its(:links) { is_expected.to eql ["hogeservice:hogedb", "fugaservice:fugadb"] }
+          its(:links) { is_expected.to eql [{ service: "hoge", database: "hoge" }, { service: "fuga", database: "fuga" }] }
         end
 
         context "when the given schema is invalid" do

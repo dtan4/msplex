@@ -1,5 +1,7 @@
 name: sample
 maintainer: Tanaka Taro
 links:
-  - "hogeservice:hogedb"
-  - "fugaservice:fugadb"
+  - service: hoge
+    database: hoge
+  - service: fuga
+    database: fuga
