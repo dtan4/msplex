@@ -217,7 +217,7 @@ ENDPOINT
       end
 
       def links(services)
-        services.map { |service| "#{service.name}:#{service.name}" }
+        services.map { |service| "#{service.compose_service_name}:#{service.name}" }
       end
 
       def navbar_items
