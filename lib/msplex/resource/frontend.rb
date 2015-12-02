@@ -77,6 +77,8 @@ CONFIGRU
 FROM #{image}
 MAINTAINER Your Name <you@example.com>
 
+ENV RACK_ENV production
+
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
@@ -91,6 +93,7 @@ ADD . /usr/src/app
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9292
+
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         DOCKERFILE
       end
