@@ -44,8 +44,9 @@ class User < ActiveRecord::Base
 end
 DEFINITION
             params: <<-PARAMS,
-user_name = params[:users][:name]
-user_description = params[:users][:description]
+json_params = JSON.parse(request.body.read)
+user_name = json_params[:users][:name]
+user_description = json_params[:users][:description]
 
 PARAMS
             list: <<-LIST,
@@ -106,8 +107,9 @@ class App < Sinatra::Base
     content_type :json
     result = {}
 
-    user_name = params[:users][:name]
-    user_description = params[:users][:description]
+    json_params = JSON.parse(request.body.read)
+    user_name = json_params[:users][:name]
+    user_description = json_params[:users][:description]
     user = User.new(name: user_name)
     user.save!
     result[:users] ||= []

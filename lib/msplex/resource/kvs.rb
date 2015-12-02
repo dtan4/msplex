@@ -39,9 +39,11 @@ module Msplex
       end
 
       def params(table)
-        tables[table.to_sym].map do |field|
-          "#{table.to_s.singularize}_#{field[:key]} = params[:#{table}][:#{field[:key]}]"
-        end.join("\n") << "\n"
+        [
+          "json_params = JSON.parse(request.body.read)"
+        ].concat(
+          tables[table.to_sym].map { |field| "#{table.to_s.singularize}_#{field[:key]} = json_params[:#{table}][:#{field[:key]}]" }
+        ).join("\n") << "\n"
       end
 
       def list(table)

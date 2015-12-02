@@ -98,21 +98,6 @@ DEFINITIONS
         it { is_expected.to eq "" }
       end
 
-      describe "#params" do
-        let(:table) do
-          :users
-        end
-
-        subject { kvs.params(table) }
-
-        it "should generate assignment statements" do
-          expect(subject).to eq <<-PARAMS
-user_name = params[:users][:name]
-user_description = params[:users][:description]
-PARAMS
-        end
-      end
-
       describe "#list" do
         let(:table) do
           :users
@@ -125,6 +110,22 @@ PARAMS
 users = User.all.to_a
 result[:users] = users
 LIST
+        end
+      end
+
+      describe "#params" do
+        let(:table) do
+          :users
+        end
+
+        subject { kvs.params(table) }
+
+        it "should generate assignment statements" do
+          expect(subject).to eq <<-PARAMS
+json_params = JSON.parse(request.body.read)
+user_name = json_params[:users][:name]
+user_description = json_params[:users][:description]
+PARAMS
         end
       end
 

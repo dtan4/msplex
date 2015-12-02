@@ -60,8 +60,11 @@ CONFIG
 
       def params(table)
         [
+          "json_params = JSON.parse(request.body.read)",
           param_assignment_statement(table, "id")
-        ].concat(tables[table.to_sym].map { |field| param_assignment_statement(table, field[:key]) }).join("\n") << "\n"
+        ].concat(
+          tables[table.to_sym].map { |field| param_assignment_statement(table, field[:key]) }
+        ).join("\n") << "\n"
       end
 
       def list(table)
@@ -127,7 +130,7 @@ DEFINITION
       end
 
       def param_assignment_statement(table, param)
-        "#{param_name_of(table, param)} = params[:#{table}][:#{param}]"
+        "#{param_name_of(table, param)} = json_params[:#{table}][:#{param}]"
       end
 
       def param_name_of(table, param)
