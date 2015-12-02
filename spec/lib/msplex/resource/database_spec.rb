@@ -90,6 +90,15 @@ module Msplex
         end
       end
 
+      describe "#compose_service_name" do
+        subject { database.compose_service_name }
+
+        it "should delegate to child class" do
+          expect_any_instance_of(Msplex::Resource::RDB).to receive(:compose_service_name)
+          subject
+        end
+      end
+
       describe "#config" do
         subject { database.config }
 
