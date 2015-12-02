@@ -33,6 +33,7 @@ test:
   database: #{db_name("test")}
 
 production:
+  <<: *default
   database: #{db_name("production")}
 CONFIG
       end
