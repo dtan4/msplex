@@ -482,6 +482,17 @@ DEPENDENCIES
 BUNDLED WITH
    1.10.6
 GEMFILE_LOCK
+            rakefile: <<-RAKEFILE,
+require "sinatra"
+require "sinatra/activerecord"
+require "sinatra/activerecord/rake"
+
+namespace :db do
+  task :load_config do
+    require "./app"
+  end
+end
+RAKEFILE
           )
         ]
       end
@@ -564,6 +575,11 @@ MIGRATION
       it "should generate Gemfile.lock" do
         subject
         expect(open(File.join(out_dir, "services", "hogeservice", "Gemfile.lock")).read).to match(/sinatra \(1\.4\.6\)/)
+      end
+
+      it "should generate Rakefile" do
+        subject
+        expect(open(File.join(out_dir, "services", "hogeservice", "Rakefile")).read).to match(/require "sinatra\/activerecord\/rake"/)
       end
 
       it "should generate config/database.yml" do
