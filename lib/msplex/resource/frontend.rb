@@ -16,7 +16,6 @@ module Msplex
         <<-APPRB
 class App < Sinatra::Base
   configure do
-    register Sinatra::ActiveRecordExtension
     use Rack::Session::Cookie, expire_after: 3600, secret: "salt"
     use Rack::Csrf, raise: true
     Slim::Engine.default_options[:pretty] = true
