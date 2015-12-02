@@ -163,6 +163,12 @@ APPRB
         end
       end
 
+      describe "#compose_service_name" do
+        subject { service.compose_service_name}
+
+        it { is_expected.to eq "sample_service" }
+      end
+
       describe "#config_ru" do
         subject { service.config_ru }
 
