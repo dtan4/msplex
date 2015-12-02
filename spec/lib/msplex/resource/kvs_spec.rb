@@ -122,8 +122,9 @@ LIST
 
         it "should generate assignment statements" do
           expect(subject).to eq <<-PARAMS
-user_name = params[:users][:name]
-user_description = params[:users][:description]
+json_params = JSON.parse(request.body.read)
+user_name = json_params[:users][:name]
+user_description = json_params[:users][:description]
 PARAMS
         end
       end
