@@ -386,6 +386,24 @@ GEMFILE
 
         it { is_expected.to eq "ruby:2.2.3" }
       end
+
+      describe "#rakefile" do
+        subject { service.rakefile }
+
+        it "should generate Rakefile" do
+          expect(subject).to eq <<-RAKEFILE
+require "sinatra"
+require "sinatra/activerecord"
+require 'sinatra/activerecord/rake'
+
+namespace :db do
+  task :load_config do
+    require "./app"
+  end
+end
+RAKEFILE
+        end
+      end
     end
   end
 end

@@ -194,6 +194,20 @@ GEMFILE_LOCK
         "ruby:2.2.3"
       end
 
+      def rakefile
+        <<-RAKEFILE
+require "sinatra"
+require "sinatra/activerecord"
+require 'sinatra/activerecord/rake'
+
+namespace :db do
+  task :load_config do
+    require "./app"
+  end
+end
+RAKEFILE
+      end
+
       private
 
       def db_gem(database)
