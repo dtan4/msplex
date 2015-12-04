@@ -105,7 +105,7 @@ class App < Sinatra::Base
 
   post "/users" do
     content_type :json
-    result = {}
+    result = { error: false }
 
     json_params = JSON.parse(request.body.read)
     user_name = json_params[:users][:name]
@@ -120,7 +120,7 @@ class App < Sinatra::Base
 
   get "/users" do
     content_type :json
-    result = {}
+    result = { error: false }
 
 
     users = User.all
