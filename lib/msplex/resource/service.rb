@@ -69,14 +69,14 @@ class App < Sinatra::Base
       uri = URI.parse(endpoint + "?" + param_str(parameters))
       JSON.parse(Net::HTTP.get_response(uri).body, symbolize_names: true)
     rescue
-      {}
+      { error: true }
     end
 
     def http_post(endpoint, parameters)
       uri = URI.parse(endpoint)
       JSON.parse(Net::HTTP.post_form(uri, parameters).body, symbolize_names: true)
     rescue
-      {}
+      { error: true }
     end
 
     def endpoint_of(service, action)
@@ -227,7 +227,7 @@ RAKEFILE
             <<-ENDPOINT
 #{defined[:type]} "/#{action[:table]}" do
   content_type :json
-  result = {}
+  result = { error: false }
 
 #{defined[:params] ? Utils.indent(database.params(action[:table]), 2) : ""}
 #{Utils.indent(db_action, 2)}
