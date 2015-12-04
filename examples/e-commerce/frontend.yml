@@ -5,7 +5,15 @@ pages:
   - name: cart
     elements: |
       h1 Shopping Cart
-      = http_get(endpoint_of("catalog", "items"))
   - name: catalog
     elements: |
       h1 Shopping Catalog
+      table.table
+        th
+          td Name
+          td Description
+        - http_get(endpoint_of("catalog", "items"))[:items].each do |item|
+          tr
+            td
+              = item[:name]
+              = item[:description]
