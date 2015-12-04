@@ -111,6 +111,10 @@ gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
 gem "rake"
 gem "json"
+
+group :development do
+  gem "sinatra-reloader", require: "sinatra/reloader"
+end
 GEMFILE
       end
 
@@ -125,12 +129,16 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    backports (3.6.7)
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.8.3)
+    multi_json (1.11.2)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     rack_csrf (2.5.0)
       rack (>= 1.1.0)
     rake (10.4.2)
@@ -138,6 +146,15 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    sinatra-contrib (1.4.6)
+      backports (>= 2.0)
+      multi_json
+      rack-protection
+      rack-test
+      sinatra (~> 1.4.0)
+      tilt (>= 1.3, < 3)
+    sinatra-reloader (1.0)
+      sinatra-contrib
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
@@ -156,6 +173,7 @@ DEPENDENCIES
   rack_csrf
   rake
   sinatra
+  sinatra-reloader
   slim
 
 BUNDLED WITH
