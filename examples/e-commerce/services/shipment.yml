@@ -1,0 +1,4 @@
+name: shipment
+actions:
+  - type: list
+    table: shipments

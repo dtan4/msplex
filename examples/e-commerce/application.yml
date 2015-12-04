@@ -7,3 +7,5 @@ links:
     database: catalog
   - service: payment
     database: payment
+  - service: shipment
+    database: shipment
