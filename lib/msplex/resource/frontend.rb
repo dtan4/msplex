@@ -21,6 +21,10 @@ class App < Sinatra::Base
     Slim::Engine.default_options[:pretty] = true
   end
 
+  configure :development do
+    register Sinatra::Reloader
+  end
+
   helpers do
     def csrf_meta_tag
       Rack::Csrf.csrf_metatag(env)
