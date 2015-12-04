@@ -84,8 +84,8 @@ class App < Sinatra::Base
       parameters.map { |key, value| key.to_s + "=" + CGI.escape(value.to_s) }.join("&")
     end
 
-    def http_get(endpoint, parameters)
-      uri = URI.parse(endpoint + "?" + param_str(parameters))
+    def http_get(endpoint, parameters = {})
+      uri = URI.parse(parameters.length > 0 ? endpoint + "?" + param_str(parameters) : endpoint)
       JSON.parse(Net::HTTP.get_response(uri).body, symbolize_names: true)
     rescue
       { error: true }
