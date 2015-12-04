@@ -207,8 +207,8 @@ RUN bundle install --without test development --system
 
 ADD . /usr/src/app
 
-EXPOSE 9292
-CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
+EXPOSE 80
+CMD ["bundle", "exec", "rackup", "-p", "80", "-E", "production"]
           DOCKERFILE
         end
       end
