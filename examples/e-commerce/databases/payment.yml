@@ -1,0 +1,10 @@
+name: payment
+type: rdb
+tables:
+  payments:
+    - key: price
+      type: integer
+    - key: item_id
+      type: integer
+    - key: amount
+      type: integer

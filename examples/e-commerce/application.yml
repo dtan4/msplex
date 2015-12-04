@@ -5,3 +5,5 @@ links:
     database: cart
   - service: catalog
     database: catalog
+  - service: payment
+    database: payment
