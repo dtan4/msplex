@@ -1,19 +1,11 @@
 pages:
   - name: index
-    elements:
-      - type: panel
-        id: rootPanel
-        class: ""
-        children:
-          - type: label
-            value: E-commerce Applicaton
-            id: label0
-            class: ""
-          - type: text
-            id: itemIdInput
-            class: ""
-          - type: button
-            value: submit
-            id: addToCartBtn
-            class: ""
-            action: cart/update
+    elements: |
+      h1 E-commerce Application
+  - name: cart
+    elements: |
+      h1 Shopping Cart
+      = http_get(endpoint_of("catalog", "items"))
+  - name: catalog
+    elements: |
+      h1 Shopping Catalog
