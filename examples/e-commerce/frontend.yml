@@ -2,6 +2,15 @@ pages:
   - name: index
     elements: |
       h1 E-commerce Application
+      ul
+        li
+          a href="/cart" Shopping Cart
+        li
+          a href="/catalog" Shopping Catalog
+        li
+          a href="/payment" Payment
+        li
+          a href="/shipment" Shipment
   - name: cart
     elements: |
       h1 Shopping Cart
@@ -17,3 +26,35 @@ pages:
             td
               = item[:name]
               = item[:description]
+  - name: payment
+    elements: |
+      h1 Payment
+      table.table
+        th
+          td Item ID
+          td Price
+          td Amount
+        - http_get(endpoint_of("payment", "payments"))[:payments].each do |payment|
+          tr
+            td
+              = payment[:item_id]
+            td
+              = payment[:price]
+            td
+              = payment[:amount]
+  - name: shipment
+    elements: |
+      h1 Shipment
+      table.table
+        th
+          td Item ID
+          td Amount
+          td Address
+        - http_get(endpoint_of("shipment", "shipments"))[:shipments].each do |shipment|
+          tr
+            td
+              = shipment[:item_id]
+            td
+              = shipment[:amount]
+            td
+              = shipment[:address]
