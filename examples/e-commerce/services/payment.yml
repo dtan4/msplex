@@ -1,0 +1,6 @@
+name: payment
+actions:
+  - type: create
+    table: payments
+  - type: list
+    table: payments
