@@ -2,9 +2,9 @@ name: shipment
 type: rdb
 tables:
   shipments:
+    - key: user_id
+      type: integer
     - key: item_id
       type: integer
     - key: amount
       type: integer
-    - key: address
-      type: string

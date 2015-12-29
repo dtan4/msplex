@@ -6,3 +6,5 @@ tables:
       type: string
     - key: descripton
       type: string
+    - key: price
+      type: integer
