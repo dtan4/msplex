@@ -32,7 +32,7 @@ module Msplex
     Dir.glob(File.join(schema_dir, "databases", "*.yml")).inject([]) do |result, schema|
       result << Msplex::Resource::Database.read_schema(schema)
       result
-    end
+    end.sort_by(&:name)
   end
   module_function :read_database_schemas
 
@@ -40,7 +40,7 @@ module Msplex
     Dir.glob(File.join(schema_dir, "services", "*.yml")).inject([]) do |result, schema|
       result << Msplex::Resource::Service.read_schema(schema)
       result
-    end
+    end.sort_by(&:name)
   end
   module_function :read_service_schemas
 end
