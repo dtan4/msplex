@@ -146,30 +146,7 @@ ELEMENTS
         subject { frontend.layout_html(application) }
 
         it "should generate Slim template of layout" do
-          expect(subject).to eq <<-HTML
-doctype html
-html
-  head
-    meta charset="utf-8"
-    == csrf_meta_tag
-    title
-      | &lt;script&gt;sample&lt;/script&gt;
-    link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-    script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-  body
-    nav.navbar.navbar-default
-      .container-fluid
-        .navbar-header
-          a.navbar-brand href="/" &lt;script&gt;sample&lt;/script&gt;
-        .collapse.navbar-collapse#bs-navbar-collapse-1
-          ul.nav.navbar-nav
-            li
-              a href="/" Index
-            li
-              a href="/search" Search
-    .container
-      == yield
-HTML
+          expect(subject).to eq fixture_of("frontend", "layout.slim")
         end
       end
 
