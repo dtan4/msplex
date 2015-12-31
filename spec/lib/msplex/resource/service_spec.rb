@@ -132,17 +132,7 @@ CREATE
           end
 
           it "should generate Gemfile" do
-            expect(subject).to eq <<-GEMFILE
-source "https://rubygems.org"
-
-gem "sinatra", require: "sinatra/base"
-gem "activesupport", require: "active_support/all"
-gem "activerecord"
-gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem "rake"
-gem "json"
-gem "pg", "0.18.3"
-GEMFILE
+            expect(subject).to eq fixture_of("service", "Gemfile")
           end
         end
 
