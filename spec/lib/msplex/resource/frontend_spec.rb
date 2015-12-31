@@ -54,7 +54,7 @@ ELEMENTS
         subject { frontend.app_rb }
 
         it "should generate app.rb" do
-          expect(subject).to eq open(fixture_path("frontend/app.rb")).read
+          expect(subject).to eq fixture_of("frontend", "app.rb")
         end
       end
 
@@ -104,7 +104,7 @@ ELEMENTS
         subject { frontend.config_ru }
 
         it "should generate config.ru" do
-          expect(subject).to eq open(fixture_path("frontend/config.ru")).read
+          expect(subject).to eq fixture_of("frontend", "config.ru")
         end
       end
 
@@ -112,7 +112,7 @@ ELEMENTS
         subject { frontend.dockerfile }
 
         it "should generate Dockerfile" do
-          expect(subject).to eq open(fixture_path("frontend/Dockerfile")).read
+          expect(subject).to eq fixture_of("frontend", "Dockerfile")
         end
       end
 
