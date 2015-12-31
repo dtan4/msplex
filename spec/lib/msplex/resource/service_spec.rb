@@ -111,14 +111,7 @@ CREATE
         subject { service.config_ru }
 
         it "should generate config.ru" do
-          expect(subject).to eq(<<-CONFIGRU)
-require "rubygems"
-require "bundler"
-Bundler.require
-
-require "./app.rb"
-run App
-CONFIGRU
+          expect(subject).to eq fixture_of("service", "config.ru")
         end
       end
 
