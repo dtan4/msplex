@@ -104,14 +104,7 @@ ELEMENTS
         subject { frontend.config_ru }
 
         it "should generate config.ru" do
-          expect(subject).to eq(<<-CONFIGRU)
-require "rubygems"
-require "bundler"
-Bundler.require
-
-require "./app.rb"
-run App
-          CONFIGRU
+          expect(subject).to eq open(fixture_path("frontend/config.ru")).read
         end
       end
 
