@@ -120,20 +120,7 @@ ELEMENTS
         subject { frontend.gemfile }
 
         it "should generate Gemfile" do
-          expect(subject).to eq <<-GEMFILE
-source "https://rubygems.org"
-
-gem "sinatra", require: "sinatra/base"
-gem "slim"
-gem "rack_csrf", require: "rack/csrf"
-gem "activesupport", require: "active_support/all"
-gem "rake"
-gem "json"
-
-group :development do
-  gem "sinatra-reloader", require: "sinatra/reloader"
-end
-GEMFILE
+          expect(subject).to eq fixture_of("frontend", "Gemfile")
         end
       end
 
