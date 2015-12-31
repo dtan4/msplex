@@ -132,7 +132,7 @@ CREATE
           end
 
           it "should generate Gemfile" do
-            expect(subject).to eq fixture_of("service", "Gemfile")
+            expect(subject).to eq fixture_of("service", "Gemfile.db")
           end
         end
 
