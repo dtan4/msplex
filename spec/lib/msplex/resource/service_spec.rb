@@ -142,17 +142,7 @@ CREATE
           end
 
           it "should generate Gemfile without database gem" do
-            expect(subject).to eq <<-GEMFILE
-source "https://rubygems.org"
-
-gem "sinatra", require: "sinatra/base"
-gem "activesupport", require: "active_support/all"
-gem "activerecord"
-gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem "rake"
-gem "json"
-
-GEMFILE
+            expect(subject).to eq fixture_of("service", "Gemfile.no_db")
           end
         end
       end
