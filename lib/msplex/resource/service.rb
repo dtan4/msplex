@@ -124,7 +124,7 @@ DOCKERFILE
       end
 
       def gemfile(database)
-        <<-GEMFILE
+        <<-GEMFILE.gsub(/^$/, "")
 source "https://rubygems.org"
 
 gem "sinatra", require: "sinatra/base"

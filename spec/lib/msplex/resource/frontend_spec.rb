@@ -54,55 +54,7 @@ ELEMENTS
         subject { frontend.app_rb }
 
         it "should generate app.rb" do
-          expect(subject).to eq <<-APPRB
-class App < Sinatra::Base
-  configure do
-    use Rack::Session::Cookie, expire_after: 3600, secret: "salt"
-    use Rack::Csrf, raise: true
-    Slim::Engine.default_options[:pretty] = true
-  end
-
-  configure :development do
-    register Sinatra::Reloader
-  end
-
-  helpers do
-    def csrf_meta_tag
-      Rack::Csrf.csrf_metatag(env)
-    end
-
-    def param_str(parameters)
-      parameters.map { |key, value| key.to_s + "=" + CGI.escape(value.to_s) }.join("&")
-    end
-
-    def http_get(endpoint, parameters = {})
-      uri = URI.parse(parameters.length > 0 ? endpoint + "?" + param_str(parameters) : endpoint)
-      JSON.parse(Net::HTTP.get_response(uri).body, symbolize_names: true)
-    rescue
-      { error: true }
-    end
-
-    def http_post(endpoint, parameters)
-      uri = URI.parse(endpoint)
-      JSON.parse(Net::HTTP.post_form(uri, parameters).body, symbolize_names: true)
-    rescue
-      { error: true }
-    end
-
-    def endpoint_of(service, action)
-      "http://" << service << "/" << action
-    end
-  end
-
-  get "/" do
-    slim :index, locals: { users: http_get(endpoint_of("user", "users/list")) }
-  end
-
-  get "/search" do
-    slim :search, locals: {  }
-  end
-end
-APPRB
+          expect(subject).to eq fixture_of("frontend", "app.rb")
         end
       end
 
@@ -152,14 +104,7 @@ APPRB
         subject { frontend.config_ru }
 
         it "should generate config.ru" do
-          expect(subject).to eq(<<-CONFIGRU)
-require "rubygems"
-require "bundler"
-Bundler.require
-
-require "./app.rb"
-run App
-          CONFIGRU
+          expect(subject).to eq fixture_of("frontend", "config.ru")
         end
       end
 
@@ -167,29 +112,7 @@ run App
         subject { frontend.dockerfile }
 
         it "should generate Dockerfile" do
-          expect(subject).to eq(<<-DOCKERFILE)
-FROM ruby:2.2.3
-MAINTAINER Your Name <you@example.com>
-
-ENV RACK_ENV production
-
-RUN bundle config --global frozen 1
-
-RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-
-ADD Gemfile /usr/src/app/
-ADD Gemfile.lock /usr/src/app/
-RUN bundle install --without test development --system
-
-ADD . /usr/src/app
-
-EXPOSE 9292
-
-CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
-          DOCKERFILE
+          expect(subject).to eq fixture_of("frontend", "Dockerfile")
         end
       end
 
@@ -197,20 +120,7 @@ CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         subject { frontend.gemfile }
 
         it "should generate Gemfile" do
-          expect(subject).to eq <<-GEMFILE
-source "https://rubygems.org"
-
-gem "sinatra", require: "sinatra/base"
-gem "slim"
-gem "rack_csrf", require: "rack/csrf"
-gem "activesupport", require: "active_support/all"
-gem "rake"
-gem "json"
-
-group :development do
-  gem "sinatra-reloader", require: "sinatra/reloader"
-end
-GEMFILE
+          expect(subject).to eq fixture_of("frontend", "Gemfile")
         end
       end
 
@@ -218,66 +128,7 @@ GEMFILE
         subject { frontend.gemfile_lock }
 
         it "should generate Gemfile.lock" do
-          expect(subject).to eq <<-GEMFILE_LOCK
-GEM
-  remote: https://rubygems.org/
-  specs:
-    activesupport (4.2.5)
-      i18n (~> 0.7)
-      json (~> 1.7, >= 1.7.7)
-      minitest (~> 5.1)
-      thread_safe (~> 0.3, >= 0.3.4)
-      tzinfo (~> 1.1)
-    backports (3.6.7)
-    i18n (0.7.0)
-    json (1.8.3)
-    minitest (5.8.3)
-    multi_json (1.11.2)
-    rack (1.6.4)
-    rack-protection (1.5.3)
-      rack
-    rack-test (0.6.3)
-      rack (>= 1.0)
-    rack_csrf (2.5.0)
-      rack (>= 1.1.0)
-    rake (10.4.2)
-    sinatra (1.4.6)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
-    sinatra-contrib (1.4.6)
-      backports (>= 2.0)
-      multi_json
-      rack-protection
-      rack-test
-      sinatra (~> 1.4.0)
-      tilt (>= 1.3, < 3)
-    sinatra-reloader (1.0)
-      sinatra-contrib
-    slim (3.0.6)
-      temple (~> 0.7.3)
-      tilt (>= 1.3.3, < 2.1)
-    temple (0.7.6)
-    thread_safe (0.3.5)
-    tilt (2.0.1)
-    tzinfo (1.2.2)
-      thread_safe (~> 0.1)
-
-PLATFORMS
-  ruby
-
-DEPENDENCIES
-  activesupport
-  json
-  rack_csrf
-  rake
-  sinatra
-  sinatra-reloader
-  slim
-
-BUNDLED WITH
-   1.10.6
-GEMFILE_LOCK
+          expect(subject).to eq fixture_of("frontend", "Gemfile.lock")
         end
       end
 
@@ -295,30 +146,7 @@ GEMFILE_LOCK
         subject { frontend.layout_html(application) }
 
         it "should generate Slim template of layout" do
-          expect(subject).to eq <<-HTML
-doctype html
-html
-  head
-    meta charset="utf-8"
-    == csrf_meta_tag
-    title
-      | &lt;script&gt;sample&lt;/script&gt;
-    link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-    script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-  body
-    nav.navbar.navbar-default
-      .container-fluid
-        .navbar-header
-          a.navbar-brand href="/" &lt;script&gt;sample&lt;/script&gt;
-        .collapse.navbar-collapse#bs-navbar-collapse-1
-          ul.nav.navbar-nav
-            li
-              a href="/" Index
-            li
-              a href="/search" Search
-    .container
-      == yield
-HTML
+          expect(subject).to eq fixture_of("frontend", "layout.slim")
         end
       end
 

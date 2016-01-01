@@ -15,3 +15,7 @@ require 'msplex'
 def fixture_path(fixture_name)
   File.expand_path(File.join("..", "fixtures", fixture_name), __FILE__)
 end
+
+def fixture_of(resource, name)
+  open(fixture_path(File.join(resource, name))).read
+end
