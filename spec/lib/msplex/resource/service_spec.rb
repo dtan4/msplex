@@ -182,17 +182,7 @@ CREATE
         subject { service.rakefile }
 
         it "should generate Rakefile" do
-          expect(subject).to eq <<-RAKEFILE
-require "sinatra"
-require "sinatra/activerecord"
-require "sinatra/activerecord/rake"
-
-namespace :db do
-  task :load_config do
-    require "./app"
-  end
-end
-RAKEFILE
+          expect(subject).to eq fixture_of("service", "Rakefile")
         end
       end
     end
