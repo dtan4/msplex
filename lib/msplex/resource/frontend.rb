@@ -199,7 +199,6 @@ html
     title
       | #{ERB::Util.html_escape(application.name)}
     link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-    script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
   body
     nav.navbar.navbar-default
       .container-fluid
@@ -210,6 +209,7 @@ html
 #{Utils.indent(navbar_items, 12)}
     .container
       == yield
+    script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 HTML
       end
 
