@@ -135,7 +135,7 @@ ELEMENTS
       describe "#image" do
         subject { frontend.image }
 
-        it { is_expected.to eq "ruby:2.2.3" }
+        it { is_expected.to eq "ruby:2.3.0" }
       end
 
       describe "#layout_html" do

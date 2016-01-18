@@ -50,7 +50,7 @@ module Msplex
       let(:frontend) do
         double(:frontend,
           compose: {
-            image: "ruby:2.2.3",
+            image: "ruby:2.3.0",
             links: [
               "hoge_service:hoge",
               "fuga_service:fuga",
@@ -64,7 +64,7 @@ module Msplex
           double(:service,
             name: "hoge",
             compose: {
-              image: "ruby:2.2.3",
+              image: "ruby:2.3.0",
               links: [
                 "hoge_db:db",
               ],
@@ -77,7 +77,7 @@ module Msplex
           double(:service,
             name: "fuga",
             compose: {
-              image: "ruby:2.2.3",
+              image: "ruby:2.3.0",
               links: [
                 "fuga_db:db",
               ],
@@ -120,18 +120,18 @@ module Msplex
         subject
         expect(open(File.join(out_dir, "docker-compose.yml")).read).to eq <<-COMPOSE
 frontend:
-  image: ruby:2.2.3
+  image: ruby:2.3.0
   links:
   - hoge_service:hoge
   - fuga_service:fuga
 hoge_service:
-  image: ruby:2.2.3
+  image: ruby:2.3.0
   links:
   - hoge_db:db
   environment:
   - RACK_ENV=production
 fuga_service:
-  image: ruby:2.2.3
+  image: ruby:2.3.0
   links:
   - fuga_db:db
   environment:
@@ -195,7 +195,7 @@ require "./app.rb"
 run App
 CONFIGRU
           dockerfile: <<-DOCKERFILE,
-FROM ruby:2.2.3
+FROM ruby:2.3.0
 MAINTAINER Your Name <you@example.com>
 
 RUN bundle config --global frozen 1
@@ -315,7 +315,7 @@ HTML
 
       it "should generate Dockerfile" do
         subject
-        expect(open(File.join(out_dir, "frontend", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
+        expect(open(File.join(out_dir, "frontend", "Dockerfile")).read).to match(/FROM ruby:2.3.0/)
       end
 
       it "should generate Gemfile" do
@@ -402,7 +402,7 @@ require "./app.rb"
 run App
 CONFIGRU
             dockerfile: <<-DOCKERFILE,
-FROM ruby:2.2.3
+FROM ruby:2.3.0
 MAINTAINER Your Name <you@example.com>
 
 RUN bundle config --global frozen 1
@@ -568,7 +568,7 @@ MIGRATION
 
       it "should generate Dockerfile" do
         subject
-        expect(open(File.join(out_dir, "services", "hoge", "Dockerfile")).read).to match(/FROM ruby:2.2.3/)
+        expect(open(File.join(out_dir, "services", "hoge", "Dockerfile")).read).to match(/FROM ruby:2.3.0/)
       end
 
       it "should generate Gemfile" do
