@@ -175,7 +175,7 @@ CREATE
       describe "#image" do
         subject { service.image }
 
-        it { is_expected.to eq "ruby:2.2.3" }
+        it { is_expected.to eq "ruby:2.3.0" }
       end
 
       describe "#rakefile" do

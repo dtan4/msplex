@@ -195,7 +195,7 @@ GEMFILE_LOCK
       end
 
       def image
-        "ruby:2.2.3"
+        "ruby:2.3.0"
       end
 
       def rakefile

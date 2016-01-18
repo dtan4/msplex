@@ -1,4 +1,4 @@
-FROM ruby:2.2.3
+FROM ruby:2.3.0
 MAINTAINER Your Name <you@example.com>
 
 ENV RACK_ENV production
