@@ -116,6 +116,14 @@ ELEMENTS
         end
       end
 
+      describe "#entrypoint_sh" do
+        subject { frontend.entrypoint_sh }
+
+        it "should generate entrypoint.sh" do
+          expect(subject).to eq fixture_of("frontend", "entrypoint.sh")
+        end
+      end
+
       describe "#gemfile" do
         subject { frontend.gemfile }
 
