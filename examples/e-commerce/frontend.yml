@@ -18,43 +18,49 @@ pages:
     elements: |
       h1 Shopping Catalog
       table.table
-        th
-          td Name
-          td Description
-        - http_get(endpoint_of("catalog", "items"))[:items].each do |item|
+        thead
           tr
-            td
-              = item[:name]
-              = item[:description]
+            th Name
+            th Description
+        tbody
+          - http_get(endpoint_of("catalog", "items"))[:items].each do |item|
+            tr
+              td
+                = item[:name]
+                = item[:description]
   - name: payment
     elements: |
       h1 Payment
       table.table
-        th
-          td Item ID
-          td Price
-          td Amount
-        - http_get(endpoint_of("payment", "payments"))[:payments].each do |payment|
+        thead
           tr
-            td
-              = payment[:item_id]
-            td
-              = payment[:price]
-            td
-              = payment[:amount]
+            td Item ID
+            td Price
+            td Amount
+        tbody
+          - http_get(endpoint_of("payment", "payments"))[:payments].each do |payment|
+            tr
+              td
+                = payment[:item_id]
+              td
+                = payment[:price]
+              td
+                = payment[:amount]
   - name: shipment
     elements: |
       h1 Shipment
       table.table
-        th
-          td Item ID
-          td Amount
-          td Address
-        - http_get(endpoint_of("shipment", "shipments"))[:shipments].each do |shipment|
+        thead
           tr
-            td
-              = shipment[:item_id]
-            td
-              = shipment[:amount]
-            td
-              = shipment[:address]
+            td Item ID
+            td Amount
+            td Address
+        tbody
+          - http_get(endpoint_of("shipment", "shipments"))[:shipments].each do |shipment|
+            tr
+              td
+                = shipment[:item_id]
+              td
+                = shipment[:amount]
+              td
+                = shipment[:address]
