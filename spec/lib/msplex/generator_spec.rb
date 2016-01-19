@@ -212,8 +212,18 @@ ADD . /usr/src/app
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9292
+
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
 DOCKERFILE
+          entrypoint_sh: <<-ENTRYPOINT,
+#!/bin/bash
+
+bundle exec rake db:create
+bundle exec rake db:migrate
+
+exec $@
+ENTRYPOINT
           gemfile: <<-GEMFILE,
 source "https://rubygems.org"
 
@@ -318,6 +328,12 @@ HTML
         expect(open(File.join(out_dir, "frontend", "Dockerfile")).read).to match(/FROM ruby:2.3.0/)
       end
 
+      it "should generate entrypoint.sh" do
+        subject
+        expect(open(File.join(out_dir, "frontend", "entrypoint.sh")).read).to match(/#!\/bin\/bash/)
+        expect(File.executable?(File.join(out_dir, "frontend", "entrypoint.sh"))).to eq true
+      end
+
       it "should generate Gemfile" do
         subject
         expect(open(File.join(out_dir, "frontend", "Gemfile")).read).to match(/gem "sinatra"/)
@@ -419,8 +435,18 @@ ADD . /usr/src/app
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 9292
+
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
 DOCKERFILE
+          entrypoint_sh: <<-ENTRYPOINT,
+#!/bin/bash
+
+bundle exec rake db:create
+bundle exec rake db:migrate
+
+exec $@
+ENTRYPOINT
             gemfile: <<-GEMFILE,
 source "https://rubygems.org"
 
@@ -569,6 +595,12 @@ MIGRATION
       it "should generate Dockerfile" do
         subject
         expect(open(File.join(out_dir, "services", "hoge", "Dockerfile")).read).to match(/FROM ruby:2.3.0/)
+      end
+
+      it "should generate entrypoint.sh" do
+        subject
+        expect(open(File.join(out_dir, "services", "hoge", "entrypoint.sh")).read).to match(/#!\/bin\/bash/)
+        expect(File.executable?(File.join(out_dir, "services", "hoge", "entrypoint.sh"))).to eq true
       end
 
       it "should generate Gemfile" do
