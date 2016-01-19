@@ -123,6 +123,17 @@ CMD ["bundle", "exec", "rackup", "-p", "80", "-E", "production"]
 DOCKERFILE
       end
 
+      def entrypoint_sh
+        <<-ENTRYPOINT
+#!/bin/bash
+
+bundle exec rake db:create
+bundle exec rake db:migrate
+
+exec $@
+ENTRYPOINT
+      end
+
       def gemfile(database)
         <<-GEMFILE.gsub(/^$/, "")
 source "https://rubygems.org"

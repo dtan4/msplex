@@ -123,6 +123,14 @@ CREATE
         end
       end
 
+      describe "#entrypoint_sh" do
+        subject { service.entrypoint_sh }
+
+        it "should generate enrtypoint.sh" do
+          expect(subject).to eq fixture_of("service", "entrypoint.sh")
+        end
+      end
+
       describe "#gemfile" do
         subject { service.gemfile(database) }
 
