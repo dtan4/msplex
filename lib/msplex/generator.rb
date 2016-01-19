@@ -23,6 +23,7 @@ module Msplex
 
       generate_config_ru(@frontend, frontend_dir)
       generate_dockerfile(@frontend, frontend_dir)
+      generate_entrypoint_sh(@frontend, frontend_dir)
       generate_frontend_app_rb(frontend_dir)
       generate_frontend_gemfile(frontend_dir)
       generate_frontend_gemfile_lock(frontend_dir)
@@ -37,6 +38,7 @@ module Msplex
         generate_config_ru(service, service_dir)
         generate_database_yml(database, service_dir)
         generate_dockerfile(service, service_dir)
+        generate_entrypoint_sh(service, service_dir)
         generate_service_app_rb(service, database, service_dir)
         generate_service_gemfile(service, database, service_dir)
         generate_service_gemfile_lock(service, database, service_dir)
@@ -58,6 +60,11 @@ module Msplex
 
     def generate_dockerfile(resource, base_dir)
       File.open(File.join(base_dir, "Dockerfile"), "w+") { |f| f.puts resource.dockerfile }
+    end
+
+    def generate_entrypoint_sh(resource, base_dir)
+      File.open(File.join(base_dir, "entrypoint.sh"), "w+") { |f| f.puts resource.entrypoint_sh }
+      FileUtils.chmod("a+x", File.join(base_dir, "entrypoint.sh"))
     end
 
     def generate_frontend_app_rb(base_dir)

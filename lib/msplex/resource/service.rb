@@ -119,8 +119,21 @@ RUN bundle install --without test development --system
 ADD . /usr/src/app
 
 EXPOSE 80
+
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rackup", "-p", "80", "-E", "production"]
 DOCKERFILE
+      end
+
+      def entrypoint_sh
+        <<-ENTRYPOINT
+#!/bin/bash
+
+bundle exec rake db:create
+bundle exec rake db:migrate
+
+exec $@
+ENTRYPOINT
       end
 
       def gemfile(database)
