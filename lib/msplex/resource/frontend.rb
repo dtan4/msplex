@@ -101,6 +101,7 @@ ADD . /usr/src/app
 
 EXPOSE 9292
 
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
         DOCKERFILE
       end
