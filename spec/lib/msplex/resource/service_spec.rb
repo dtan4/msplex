@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 end
 DEFINITION
             params: <<-PARAMS,
-json_params = JSON.parse(request.body.read)
+json_params = JSON.parse(request.body.read, symbolize_names: true)
 user_name = json_params[:users][:name]
 user_description = json_params[:users][:description]
 
