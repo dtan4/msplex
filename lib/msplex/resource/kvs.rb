@@ -40,7 +40,7 @@ module Msplex
 
       def params(table)
         [
-          "json_params = JSON.parse(request.body.read)"
+          "json_params = JSON.parse(request.body.read, symbolize_names: true)"
         ].concat(
           tables[table.to_sym].map { |field| "#{table.to_s.singularize}_#{field[:key]} = json_params[:#{table}][:#{field[:key]}]" }
         ).join("\n") << "\n"

@@ -60,7 +60,7 @@ CONFIG
 
       def params(table)
         [
-          "json_params = JSON.parse(request.body.read)",
+          "json_params = JSON.parse(request.body.read, symbolize_names: true)",
           param_assignment_statement(table, "id")
         ].concat(
           tables[table.to_sym].map { |field| param_assignment_statement(table, field[:key]) }
