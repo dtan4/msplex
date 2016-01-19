@@ -119,6 +119,8 @@ RUN bundle install --without test development --system
 ADD . /usr/src/app
 
 EXPOSE 80
+
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["bundle", "exec", "rackup", "-p", "80", "-E", "production"]
 DOCKERFILE
       end
