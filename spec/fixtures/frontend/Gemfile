@@ -6,6 +6,7 @@ gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
 gem "rake"
 gem "json"
+gem "thin", "~> 1.6.4"
 
 group :development do
   gem "sinatra-reloader", require: "sinatra/reloader"

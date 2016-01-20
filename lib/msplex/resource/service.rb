@@ -146,6 +146,7 @@ gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
 gem "rake"
 gem "json"
+gem "thin", "~> 1.6.4"
 #{db_gem(database)}
 GEMFILE
       end
@@ -170,6 +171,8 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     builder (3.2.2)
+    daemons (1.2.3)
+    eventmachine (1.0.9.1)
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.8.3)
@@ -185,6 +188,10 @@ GEM
     sinatra-activerecord (2.0.9)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
+    thin (1.6.4)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (~> 1.0)
     thread_safe (0.3.5)
     tilt (2.0.1)
     tzinfo (1.2.2)
@@ -201,6 +208,7 @@ DEPENDENCIES
   rake
   sinatra
   sinatra-activerecord
+  thin (~> 1.6.4)
 
 BUNDLED WITH
    1.10.6
