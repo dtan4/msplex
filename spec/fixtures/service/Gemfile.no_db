@@ -6,4 +6,5 @@ gem "activerecord"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
 gem "rake"
 gem "json"
+gem "thin", "~> 1.6.4"
 
