@@ -52,8 +52,8 @@ module Msplex
           compose: {
             image: "ruby:2.3.0",
             links: [
-              "hoge_service:hoge",
-              "fuga_service:fuga",
+              "nginx:hoge",
+              "nginx:fuga",
             ]
           }
         )
@@ -64,26 +64,26 @@ module Msplex
           double(:service,
             name: "hoge",
             compose: {
-              image: "ruby:2.3.0",
+              build: "services/hoge",
+              environment: [
+                "VIRTUAL_HOST=hoge",
+              ],
               links: [
                 "hoge_db:db",
               ],
-              environment: [
-                "RACK_ENV=production",
-              ]
             },
             compose_service_name: "hoge_service",
           ),
           double(:service,
             name: "fuga",
             compose: {
-              image: "ruby:2.3.0",
+              build: "services/fuga",
+              environment: [
+                "VIRTUAL_HOST=fuga",
+              ],
               links: [
                 "fuga_db:db",
               ],
-              environment: [
-                "RACK_ENV=production",
-              ]
             },
             compose_service_name: "fuga_service",
           )
@@ -122,20 +122,20 @@ module Msplex
 frontend:
   image: ruby:2.3.0
   links:
-  - hoge_service:hoge
-  - fuga_service:fuga
+  - nginx:hoge
+  - nginx:fuga
 hoge_service:
-  image: ruby:2.3.0
+  build: services/hoge
+  environment:
+  - VIRTUAL_HOST=hoge
   links:
   - hoge_db:db
-  environment:
-  - RACK_ENV=production
 fuga_service:
-  image: ruby:2.3.0
+  build: services/fuga
+  environment:
+  - VIRTUAL_HOST=fuga
   links:
   - fuga_db:db
-  environment:
-  - RACK_ENV=production
 hoge_db:
   image: postgres:9.4
 fuga_db:
