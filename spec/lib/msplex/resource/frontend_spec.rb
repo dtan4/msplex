@@ -73,8 +73,8 @@ ELEMENTS
             expect(subject).to eql({
               build: "frontend",
               links: [
-                "hoge_service:hoge",
-                "fuga_service:fuga",
+                "nginx:hoge",
+                "nginx:fuga",
               ],
               ports: [
                 "80:9292"
