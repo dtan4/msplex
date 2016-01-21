@@ -51,6 +51,9 @@ module Msplex
         double(:frontend,
           compose: {
             image: "ruby:2.3.0",
+            environment: [
+              "RACK_ENV=production",
+            ],
             links: [
               "nginx:hoge",
               "nginx:fuga",
@@ -66,6 +69,7 @@ module Msplex
             compose: {
               build: "services/hoge",
               environment: [
+                "RACK_ENV=production",
                 "VIRTUAL_HOST=hoge",
               ],
               links: [
@@ -79,6 +83,8 @@ module Msplex
             compose: {
               build: "services/fuga",
               environment: [
+                "RACK_ENV=production",
+
                 "VIRTUAL_HOST=fuga",
               ],
               links: [
@@ -121,6 +127,8 @@ module Msplex
         expect(open(File.join(out_dir, "docker-compose.yml")).read).to eq <<-COMPOSE
 frontend:
   image: ruby:2.3.0
+  environment:
+  - RACK_ENV=production
   links:
   - nginx:hoge
   - nginx:fuga
@@ -131,12 +139,14 @@ nginx:
 hoge_service:
   build: services/hoge
   environment:
+  - RACK_ENV=production
   - VIRTUAL_HOST=hoge
   links:
   - hoge_db:db
 fuga_service:
   build: services/fuga
   environment:
+  - RACK_ENV=production
   - VIRTUAL_HOST=fuga
   links:
   - fuga_db:db
