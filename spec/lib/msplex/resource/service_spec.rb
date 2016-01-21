@@ -11,6 +11,8 @@ module Msplex
         [
           { type: "create", table: "users" },
           { type: "list", table: "users" },
+          { type: "update", table: "users" },
+          { type: "delete", table: "users" },
         ]
       end
 
@@ -59,6 +61,10 @@ user.save!
 result[:users] ||= []
 result[:users] << user
 CREATE
+            update: <<-UPDATE,
+UPDATE
+            delete: <<-DELETE,
+DELETE
           )
         end
 
