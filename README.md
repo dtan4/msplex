@@ -5,6 +5,10 @@
 
 Microservice-based Web Application Generator
 
+## Supported version
+
+Ruby 2.1 or above
+
 ## Installation
 
 Add this line to your application's Gemfile:
