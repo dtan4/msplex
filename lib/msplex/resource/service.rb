@@ -15,11 +15,11 @@ module Msplex
           params: true,
         },
         update: {
-          type: :post, # PATCH
+          type: :patch,
           params: true,
         },
         delete: {
-          type: :post, # DELETE
+          type: :delete,
           params: true,
         },
       }

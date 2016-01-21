@@ -60,4 +60,28 @@ class App < Sinatra::Base
 
     result.to_json
   end
+
+  patch "/users" do
+    content_type :json
+    result = { error: false }
+
+    json_params = JSON.parse(request.body.read, symbolize_names: true)
+    user_name = json_params[:users][:name]
+    user_description = json_params[:users][:description]
+
+
+    result.to_json
+  end
+
+  delete "/users" do
+    content_type :json
+    result = { error: false }
+
+    json_params = JSON.parse(request.body.read, symbolize_names: true)
+    user_name = json_params[:users][:name]
+    user_description = json_params[:users][:description]
+
+
+    result.to_json
+  end
 end
