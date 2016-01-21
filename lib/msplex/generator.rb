@@ -11,7 +11,10 @@ module Msplex
     end
 
     def generate_compose
-      compose_yml = { frontend: @frontend.compose(@services) }
+      compose_yml = {
+        frontend: @frontend.compose(@services),
+        nginx: nginx_compose,
+      }
       service_database_pairs.each { |service, database| compose_yml[service.compose_service_name] = service.compose(database) }
       @databases.each { |database| compose_yml[database.compose_service_name] = database.compose }
       write_compose(compose_yml)
@@ -117,6 +120,15 @@ module Msplex
 
     def generate_rakefile(resource, base_dir)
       File.open(File.join(base_dir, "Rakefile"), "w+") { |f| f.puts resource.rakefile }
+    end
+
+    def nginx_compose
+      {
+        image: "jwilder/nginx-proxy:latest",
+        volumes: [
+          "/var/run/docker.sock:/tmp/docker.sock:ro",
+        ],
+      }
     end
 
     def service_database_pairs

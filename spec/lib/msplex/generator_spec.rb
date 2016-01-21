@@ -124,6 +124,10 @@ frontend:
   links:
   - nginx:hoge
   - nginx:fuga
+nginx:
+  image: jwilder/nginx-proxy:latest
+  volumes:
+  - "/var/run/docker.sock:/tmp/docker.sock:ro"
 hoge_service:
   build: services/hoge
   environment:
