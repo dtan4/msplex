@@ -39,6 +39,9 @@ module Msplex
       def compose(database)
         {
           build: "services/#{@name}",
+          environment: [
+            "VIRTUAL_HOST=#{@name}"
+          ],
           links: links(database),
         }
       end

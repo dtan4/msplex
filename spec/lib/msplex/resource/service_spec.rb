@@ -86,6 +86,9 @@ DELETE
           it "should generate docker-compose.yml linked with database" do
             expect(subject).to eql({
               build: "services/sample",
+              environment: [
+                "VIRTUAL_HOST=sample",
+              ],
               links: [
                 "sample_db:db",
               ],
@@ -101,6 +104,9 @@ DELETE
           it "should generate docker-compose.yml" do
             expect(subject).to eql({
               build: "services/sample",
+              environment: [
+                "VIRTUAL_HOST=sample",
+              ],
               links: [],
             })
           end
