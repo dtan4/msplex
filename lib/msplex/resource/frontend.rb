@@ -118,12 +118,11 @@ ENTRYPOINT
         <<-GEMFILE
 source "https://rubygems.org"
 
-gem "sinatra", require: "sinatra/base"
-gem "slim"
-gem "rack_csrf", require: "rack/csrf"
 gem "activesupport", require: "active_support/all"
+gem "sinatra", "~> 1.4.6", require: "sinatra/base"
+gem "slim", "~> 3.0.6"
+gem "rack_csrf", require: "rack/csrf"
 gem "rake"
-gem "json"
 gem "thin", "~> 1.6.4"
 
 group :development do
@@ -157,7 +156,7 @@ GEM
       rack (>= 1.0)
     rack_csrf (2.5.0)
       rack (>= 1.1.0)
-    rake (10.4.2)
+    rake (10.5.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -180,7 +179,7 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (~> 1.0)
     thread_safe (0.3.5)
-    tilt (2.0.1)
+    tilt (2.0.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
 
@@ -189,16 +188,15 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  json
   rack_csrf
   rake
-  sinatra
+  sinatra (~> 1.4.6)
   sinatra-reloader
-  slim
+  slim (~> 3.0.6)
   thin (~> 1.6.4)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
 GEMFILE_LOCK
       end
 
