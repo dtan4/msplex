@@ -121,7 +121,7 @@ COPY . /usr/src/app
 EXPOSE 80
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["bundle", "exec", "rackup", "-p", "80", "-E", "production"]
+CMD ["bundle", "exec", "rackup", "-p", "80"]
 DOCKERFILE
       end
 

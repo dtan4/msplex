@@ -16,4 +16,4 @@ COPY . /usr/src/app
 EXPOSE 9292
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
+CMD ["bundle", "exec", "rackup", "-p", "9292"]
