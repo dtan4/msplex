@@ -87,6 +87,7 @@ DELETE
             expect(subject).to eql({
               build: "services/sample",
               environment: [
+                "RACK_ENV=production",
                 "VIRTUAL_HOST=sample",
               ],
               links: [
@@ -105,6 +106,7 @@ DELETE
             expect(subject).to eql({
               build: "services/sample",
               environment: [
+                "RACK_ENV=production",
                 "VIRTUAL_HOST=sample",
               ],
               links: [],

@@ -72,6 +72,9 @@ ELEMENTS
           it "should generate docker-compose.yml linked with services" do
             expect(subject).to eql({
               build: "frontend",
+              environment: [
+                "RACK_ENV=production",
+              ],
               links: [
                 "nginx:hoge",
                 "nginx:fuga",
@@ -91,6 +94,9 @@ ELEMENTS
           it "should generate docker-compose.yml linked with services" do
             expect(subject).to eql({
               build: "frontend",
+              environment: [
+                "RACK_ENV=production",
+              ],
               links: [],
               ports: [
                 "80:9292"

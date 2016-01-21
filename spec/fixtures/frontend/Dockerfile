@@ -3,20 +3,17 @@ MAINTAINER Your Name <you@example.com>
 
 ENV RACK_ENV production
 
-RUN bundle config --global frozen 1
-
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+COPY Gemfile /usr/src/app/
+COPY Gemfile.lock /usr/src/app/
 
-ADD Gemfile /usr/src/app/
-ADD Gemfile.lock /usr/src/app/
-RUN bundle install --without test development --system
+RUN bundle install -j4 --without development test --deployment
 
-ADD . /usr/src/app
+COPY . /usr/src/app
 
 EXPOSE 9292
 
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["bundle", "exec", "rackup", "-p", "9292", "-E", "production"]
+CMD ["bundle", "exec", "rackup", "-p", "9292"]
