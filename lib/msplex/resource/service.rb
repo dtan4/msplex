@@ -40,6 +40,7 @@ module Msplex
         {
           build: "services/#{@name}",
           environment: [
+            "RACK_ENV=production",
             "VIRTUAL_HOST=#{@name}"
           ],
           links: links(database),

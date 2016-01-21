@@ -61,6 +61,9 @@ APPRB
       def compose(services)
         {
           build: "frontend",
+          environment: [
+            "RACK_ENV=production",
+          ],
           links: links(services),
           ports: [
             "80:9292"
