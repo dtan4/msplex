@@ -77,9 +77,14 @@ LIST
       def create(table, params)
         <<-CREATE
 #{table.to_s.singularize} = #{activerecord_class(table)}.new(#{prettify_params(table, params)})
-#{table.to_s.singularize}.save!
-result[:#{table.to_s}] ||= []
-result[:#{table.to_s}] << #{table.to_s.singularize}
+
+if #{table.to_s.singularize}.save
+  result[:#{table.to_s}] ||= []
+  result[:#{table.to_s}] << #{table.to_s.singularize}
+else
+  status 400
+  result[:error_messages] = #{table.to_s.singularize}.errors.messages
+end
 CREATE
       end
 
