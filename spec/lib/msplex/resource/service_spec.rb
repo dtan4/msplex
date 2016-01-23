@@ -56,10 +56,15 @@ users = User.all
 result[:users] = users
 LIST
             create: <<-CREATE,
-user = User.new(name: user_name)
-user.save!
-result[:users] ||= []
-result[:users] << user
+user = User.new(name: user_name, description: user_description)
+
+if user.save
+  result[:users] ||= []
+  result[:users] << user
+else
+  status 400
+  result[:error_messages] = user.errors.messages
+end
 CREATE
             update: <<-UPDATE,
 UPDATE

@@ -197,9 +197,14 @@ LIST
         it "should generate code for creating new user" do
           expect(subject).to eq <<-CREATE
 user = User.new(name: user_name)
-user.save!
-result[:users] ||= []
-result[:users] << user
+
+if user.save
+  result[:users] ||= []
+  result[:users] << user
+else
+  status 400
+  result[:error_messages] = #{table.to_s.singularize}.errors.messages
+end
 CREATE
         end
       end
