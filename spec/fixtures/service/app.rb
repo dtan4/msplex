@@ -37,7 +37,7 @@ class App < Sinatra::Base
 
   post "/users" do
     content_type :json
-    result = { error: false }
+    result = {}
 
     json_params = JSON.parse(request.body.read, symbolize_names: true)
     user_name = json_params[:users][:name]
@@ -57,7 +57,7 @@ class App < Sinatra::Base
 
   get "/users" do
     content_type :json
-    result = { error: false }
+    result = {}
 
 
     users = User.all
@@ -68,7 +68,7 @@ class App < Sinatra::Base
 
   patch "/users" do
     content_type :json
-    result = { error: false }
+    result = {}
 
     json_params = JSON.parse(request.body.read, symbolize_names: true)
     user_name = json_params[:users][:name]
@@ -80,7 +80,7 @@ class App < Sinatra::Base
 
   delete "/users" do
     content_type :json
-    result = { error: false }
+    result = {}
 
     json_params = JSON.parse(request.body.read, symbolize_names: true)
     user_name = json_params[:users][:name]

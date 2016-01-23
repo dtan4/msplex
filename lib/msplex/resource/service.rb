@@ -275,7 +275,7 @@ RAKEFILE
             <<-ENDPOINT
 #{defined[:type]} "/#{action[:table]}" do
   content_type :json
-  result = { error: false }
+  result = {}
 
 #{defined[:params] ? Utils.indent(database.params(action[:table]), 2) : ""}
 #{Utils.indent(db_action, 2)}
