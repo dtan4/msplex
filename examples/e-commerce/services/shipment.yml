@@ -1,4 +1,6 @@
 name: shipment
 actions:
+  - type: create
+    table: shipments
   - type: list
     table: shipments

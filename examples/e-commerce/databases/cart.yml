@@ -1,7 +1,7 @@
 name: cart
 type: rdb
 tables:
-  carts:
+  cart:
     - key: user_id
       type: integer
     - key: item_id

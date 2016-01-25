@@ -1,0 +1,8 @@
+name: user
+actions:
+  - type: create
+    table: users
+  - type: list
+    table: shipments
+  - type: delete
+    table: shipments

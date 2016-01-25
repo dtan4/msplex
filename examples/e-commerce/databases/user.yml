@@ -1,10 +1,8 @@
 name: catalog
 type: rdb
 tables:
-  items:
+  users:
     - key: name
       type: string
-    - key: description
+    - key: address
       type: string
-    - key: price
-      type: integer

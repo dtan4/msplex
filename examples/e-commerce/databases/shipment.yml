@@ -6,5 +6,5 @@ tables:
       type: integer
     - key: item_id
       type: integer
-    - key: amount
-      type: integer
+    - key: deliver_at
+      type: datetime
