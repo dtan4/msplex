@@ -1,8 +1,8 @@
 name: cart
 actions:
   - type: create
-    table: carts
+    table: cart
   - type: list
-    table: carts
+    table: cart
   - type: delete
-    table: carts
+    table: cart
