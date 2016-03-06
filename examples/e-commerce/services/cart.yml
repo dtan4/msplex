@@ -4,5 +4,3 @@ actions:
     table: cart
   - type: list
     table: cart
-  - type: delete
-    table: cart

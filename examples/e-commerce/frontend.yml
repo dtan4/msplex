@@ -14,6 +14,16 @@ pages:
   - name: cart
     elements: |
       h1 Shopping Cart
+      table.table
+        th
+          td User ID
+          td Item ID
+        - http_get(endpoint_of("cart", "carts"))[:cart].each do |item|
+          tr
+            td
+              = http_get(endpoint_of("user", "user"), { user_id: item[:user_id] })[:user][:name]
+            td
+              = http_get(endpoint_of("catalog", "item"), { item_id: item[:item_id] })[:item][:name]
   - name: catalog
     elements: |
       h1 Shopping Catalog
@@ -27,6 +37,7 @@ pages:
             tr
               td
                 = item[:name]
+              td
                 = item[:description]
   - name: payment
     elements: |

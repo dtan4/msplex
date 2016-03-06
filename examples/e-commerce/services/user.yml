@@ -4,5 +4,3 @@ actions:
     table: users
   - type: list
     table: shipments
-  - type: delete
-    table: shipments
